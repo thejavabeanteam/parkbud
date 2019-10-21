@@ -1,0 +1,22 @@
+{
+  "name": "parkbud",
+  "version": "0.1.0",
+  "description": "Tinder for Parking at Cal Poly Pomona!",
+  "main": "secrets.js",
+  "private": true,
+  "scripts": {
+    "sync": "concurrently \"npm install\" \"cd client && npm install\"",
+    "dev": "concurrently \"NODE_ENV='development' nodemon server -e html,js,scss --ignore public --ignore client\" \"NODE_ENV='development' cd client && npm start\" "
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-session-sequelize": "^6.0.0",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "heroku-ssl-redirect": "^0.0.4",
+    "html-webpack-plugin": "^3.2.0",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {}
+}
