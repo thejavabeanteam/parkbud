@@ -5,8 +5,9 @@
   "main": "secrets.js",
   "private": true,
   "scripts": {
+    "seed": "node seed.js",
     "sync": "concurrently \"npm install\" \"cd client && npm install\"",
-    "dev": "concurrently \"NODE_ENV='development' nodemon server -e html,js,scss --ignore public --ignore client\" \"NODE_ENV='development' cd client && npm start\" "
+    "dev": "npm run seed && concurrently \"NODE_ENV='development' nodemon server -e html,js,scss --ignore public --ignore client\" \"NODE_ENV='development' cd client && npm start\" "
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -20,6 +21,7 @@
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
     "nodemon": "^1.19.4",
+    "pg": "^7.12.1",
     "sequelize": "^5.21.1",
     "webpack": "^4.41.0"
   },
