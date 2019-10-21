@@ -14,7 +14,4 @@ File(s)
 Dependencies:
 - dep (link)
 
-Blocked By:
-- N/A
-
 [View Dev Guide]()
