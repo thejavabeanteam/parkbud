@@ -9,7 +9,7 @@
 * Elshaday Assefa
 * Mai Pham
 * Mora Labisi
-* Keri Miller
+* Ronald Tran
 
 ### With Help From
 * [create-react-app](https://github.com/facebook/create-react-app)
