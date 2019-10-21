@@ -2,41 +2,15 @@ const router = require('express').Router();
 // import User model once created
 module.exports = router;
 
-//Logs user in and sets them to currentUser on the state
-router.post('/login', (req, res, next) => {
-    User.findOne({where: {email: req.body.email}})
-        .then(user => {
-            if (!user) {
-                res.status(401).send('User not found')
-            } else if (!user.correctPassword(req.body.password)) {
-                res.status(401).send('Incorrect password')
-            } else {
-                req.login(user, err => (err ? next(err) : res.json(user)))
-            }
-        })
-        .catch(next)
-});
+// add routing for /login
 
-router.post('/signup', (req, res, next) => {
-    User.create(req.body)
-        .then(user => {
-            req.login(user, err => (err ? next(err) : res.json(user)))
-        })
-        .catch(err => {
-            if (err.name === 'SequelizeUniqueConstraintError') {
-                res.status(401).send('User already exists')
-            } else {
-                next(err)
-            }
-        })
-});
 
-router.post('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/')
-});
+// add routing for /signup
 
-router.get('/me', (req, res) => {
-    res.json(req.user)
-});
+
+// add routing for /logout
+
+
+// add routing for /me
+
 
