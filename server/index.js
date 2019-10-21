@@ -45,16 +45,6 @@ const createApp = () => {
     // compression middleware
     app.use(compression());
 
-    // session middleware with passport
-    app.use(session({
-        secret: process.env.SESSION_SECRET || 'my best friend is Cody',
-        store: sessionStore,
-        resave: false,
-        saveUninitialized: false,
-    }));
-    app.use(passport.initialize());
-    app.use(passport.session());
-
     // auth and api routes
     app.use('/auth', require('./auth'));
     app.use('/api', require('./api'));
@@ -93,15 +83,4 @@ const startListening = () => {
 
 const syncDb = () => db.sync();
 
-// This evaluates as true when this file is run directly from the command line,
-// i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
-// It will evaluate false when this module is required by another module - for example,
-// if we wanted to require our app in a test spec
-if (require.main === module) {
-    sessionStore.sync()
-        .then(syncDb)
-        .then(createApp)
-        .then(startListening);
-} else {
-    createApp();
-}
+createApp();
