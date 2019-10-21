@@ -2,8 +2,6 @@
 
 ### Tinder for Parking at Cal Poly Pomona!
 
-[https://parkbud.herokuapp.com](https://parkbud.herokuapp.com)
-
 ## Created By:
 * Chau Hyunh
 * Elshaday Assefa
