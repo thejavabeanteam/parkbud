@@ -51,22 +51,6 @@ export class Menu extends React.Component {
                         </label>
 
                     {/* Include links to the other components once they've been created */}
-
-                        <Link
-                            // to="/logout" once logout component is created
-                            onClick={this.handleLogout}
-                            className="menu-item item-4"
-                        >
-                            <Tooltip
-                                title="Logout"
-                                position="top"
-                                trigger="mouseenter"
-                                delay="100"
-                                distance="20"
-                            >
-                                <FontAwesome name="sign-out" />
-                            </Tooltip>
-                        </Link>
                     </nav>
                     : null
                 }
