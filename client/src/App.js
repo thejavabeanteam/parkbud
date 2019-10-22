@@ -16,7 +16,7 @@ class App extends Component {
     const { children } = this.props;
     return (
         <div className="App">
-          {/*Import the Menu here*/}
+          {/*Place the Menu here*/}
           {children}
         </div>
     );
