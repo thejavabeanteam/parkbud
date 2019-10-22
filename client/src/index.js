@@ -4,3 +4,9 @@ import { Provider } from 'react-redux';
 // import index.css once it's created
 // import api routes once they're created
 // import redux store once it's created
+
+ReactDOM.render(
+// Grab the store from redux using the Provider object
+// Display the api routes in order to load the app
+
+document.getElementById('root'));
