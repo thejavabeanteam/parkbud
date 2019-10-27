@@ -2,9 +2,9 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
 
-    entry: "./src/scripts/app.js", //relative to root of the application
+    entry: "./client/src/index.js", //relative to root of the application
     output: {
-        filename: "./dist/app.bundle.js" //relative to root of the application
+        filename: "./client/src/build/bundle.js" //relative to root of the application
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -12,7 +12,7 @@ module.exports = {
             title: 'Welcome to ParkBud',
             myPageHeader: 'ParkBud',
             template: './src/index.html',
-            filename: './dist/index.html' //relative to root of the application
+            filename: './client/src/build/index.html' //relative to root of the application
         })
     ]
 };
