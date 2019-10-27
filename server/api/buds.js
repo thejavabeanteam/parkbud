@@ -3,7 +3,7 @@ const router = require('express').Router();
 module.exports = router;
 
 router.get('/', (req, res, next) => {
-    // use a query string/user pref's to display buds with matching schedule
+    // use a query string/user pref's to display all buds with matching schedule
     // and matching parking lot preference
 });
 
