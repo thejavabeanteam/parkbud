@@ -3,7 +3,6 @@ module.exports = router;
 
 router.get('/:userId', (req, res, next) => {
     // get a single user (to set them as current user on state)
-
 });
 
 router.put('/:userId', (req, res, next) => {
@@ -12,6 +11,5 @@ router.put('/:userId', (req, res, next) => {
 
 router.delete('/:userId', (req, res, next) => {
     // delete a user
-
 });
 
