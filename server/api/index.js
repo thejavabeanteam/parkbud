@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 module.exports = router;
 
-// register the api routes once they're created
+router.use('/userAccount', require(' ./userAccount'));
 
 router.use((req, res, next) => {
     const error = new Error('Not Found');
