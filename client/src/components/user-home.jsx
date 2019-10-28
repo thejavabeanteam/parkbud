@@ -32,10 +32,10 @@ export const UserHome = (props) => {
                 </div>
                 <div>
                     <h4>Parking Spot Preference:</h4>
-                    {!user.spotPreferences.length
+                    {!user.parkingNamePreferences.length
                         ? <p>None</p>
-                        : <ul>{user.spotPreferences.map((spot, index) =>
-                            <li key={index}>{spot}</li>)}
+                        : <ul>{user.parkingNamePreferences.map((parkingName, index) =>
+                            <li key={index}>{parkingName}</li>)}
                         </ul> }
                 </div>
                 <div>
