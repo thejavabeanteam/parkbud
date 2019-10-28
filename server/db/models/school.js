@@ -11,4 +11,7 @@ const School = db.define('school', {
     state: {
         type: Sequelize.STRING,
     },
+    zipCode: {
+        type: Sequelize.INTEGER,
+    }
 })

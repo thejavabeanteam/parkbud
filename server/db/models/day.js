@@ -1,14 +1,16 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const DayOfWeek = require('./dayOfWeek')
 
 const Day = db.define('day', {
     arrival: {
-        type: Sequelize.STRING,
+        type: Sequelize.TIME
     },
     departure:{
-        type:Sequelize.STRING,
+        type:Sequelize.TIME,
+        isAfter: this.arrival
     },
     dayOfWeek: {
-
+        type: DayOfWeek
     },
 })

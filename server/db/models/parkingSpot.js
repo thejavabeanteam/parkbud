@@ -1,13 +1,18 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const ParkingLot =  require('./parkingLot')
 
 const ParkingSpot = db.define('parkingSpot', {
-    location: {},
+    location: {
+        type: ParkingLot
+    },
     locationDescription: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
     },
     parkingPreferences: {
 
+
     }
+
 
 })

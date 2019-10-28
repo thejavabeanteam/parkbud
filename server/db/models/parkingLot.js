@@ -1,9 +1,13 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const School = require('./school')
+
 
 const ParkingLot = db.define('parkingLot', {
     name: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
     },
-    school: {},
+    school: {
+        type: School
+    },
 })

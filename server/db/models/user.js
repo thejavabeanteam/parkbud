@@ -1,6 +1,13 @@
 const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Schedule = require('./schedule')
+const Vehicle = require('./vehicle')
+const School = require('./school')
+
+
+
+
 
 const User = db.define('user', {
     username: {
@@ -11,21 +18,23 @@ const User = db.define('user', {
 
     },
     password: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
     },
     gender: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM,
+        values:['Male', 'Female', 'Other']
+
     },
     accountType: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
     },
     schedule: {
-
+        type: Schedule
     },
     vehicle: {
-
+        type: Vehicle
     },
     school: {
-
+        type: School
     },
 })
