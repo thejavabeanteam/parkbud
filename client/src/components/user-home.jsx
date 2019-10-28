@@ -42,6 +42,10 @@ export const UserHome = (props) => {
                     <h4>Current Vehicle:</h4>
                     <p>{user.vehicle}</p>
                 </div>
+                <div>
+                    <h4>Message:</h4>
+                    <p>{user.message}</p>
+                </div>
             </div>
             <div className="userButtons">
                 <NavLink to="/updateProfile">
