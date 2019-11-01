@@ -47,7 +47,6 @@ const store = createStore(rootReducer, persistedState, middleware);
 store.subscribe(() => localStorage.setItem('store', JSON.stringify(store.getState())));
 
 
-export * from './currentUser';
 // export the rest of the reduced redux stores
 export * from './currentUser';
 export * from './currentLocation';

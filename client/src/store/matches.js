@@ -1,10 +1,12 @@
 import axios from 'axios';
-import { fetchPetById, removeUnmatchedPets } from './';
+//import { fetchPetById, removeUnmatchedPets } from './';
 
 
 // ACTION TYPES
 const GET_MATCHES = 'GET_MATCHES';
 const CREATE_MATCHES = 'CREATE_MATCHES';
+const FETCH_USER_BY_ID = 'FETCH_PET_BY_ID';
+const REMOVE_UNMATCHES = 'REMOVE_UNMATCHES';
 
 
 // ACTION CREATOR
@@ -18,6 +20,15 @@ const createMatches = match => ({
     match,
 });
 
+const fetchOneUserById = (user) => ({
+    type: FETCH_USER_BY_ID,
+    user
+});
+
+const removedUnmatchData = () => ({
+    type: REMOVE_UNMATCHES
+})
+
 
 // THUNK CREATORS
 export const fetchMatches = userId =>
@@ -25,48 +36,63 @@ export const fetchMatches = userId =>
         axios.get(`/api/match/${userId}`)
             .then(res =>
                 dispatch(getMatches(res.data)))
-            .then(results => results.matches.map( pet => dispatch(fetchPetById(pet.petId))))
+            .then(results => results.matches.map( user => dispatch(fetchUserById(user.userId))))
             .catch(err => console.log(err));
 
-const markContacted = (user, pet) => {
-    axios.put(`/api/match/${user.id}/${pet.id.$t}`)
+
+const markContacted = (user) => {
+    axios.put(`/api/match/${user.id}`)
 }
 
-export const sendEmail = (user, pet) => {
-    markContacted(user, pet)
-    axios.get(`/api/contact?userEmail=${user.email}&userPhoneNumber=${user.phoneNumber}&userZipCode=${user.zipCode}&userHasYoungChildren=${user.hasYoungChildren}&userPetHistory=${user.petHistory}&petName=${pet.name.$t}&petId=${pet.id.$t}&petCity=${pet.contact.city.$t}&petState=${pet.contact.state.$t}&to=${pet.contact.email.$t}&petOptions=${pet.options.option}`)
+export const sendEmail = (user) => {
+    markContacted(user)
+    axios.get(`/api/contact?userEmail=${user.email}&userPhoneNumber=${user.phoneNumber}&userZipCode=${user.zipCode}`)
         .catch(err => console.log(err));
 }
 
-export const petWasSeen = (petId, userId) =>
+export const userWasSeen = (userId) =>
     (dispatch) => {
-        axios.post('/api/seen', { petId, userId })
+        axios.post('/api/seen', { userId })
             .catch(err => console.log(err));
     };
 
-export const rejectPet = (petId, userId) =>
+export const rejectUser = (userId) =>
     (dispatch) => {
-        dispatch(petWasSeen(petId, userId));
+        dispatch(userWasSeen(userId));
     };
 
-export const addMatches = (petId, userId) =>
+export const addMatches = (userId) =>
     dispatch =>
-        axios.post('/api/match', { petId, userId })
+        axios.post('/api/match', { userId })
             .then((res) => {
-                dispatch(petWasSeen(petId, userId));
+                dispatch(userWasSeen(userId));
                 dispatch(createMatches(res.data));
-                dispatch(fetchPetById(petId));
+                dispatch(fetchUserById(userId));
             })
             .catch(err => console.log(err));
 
-export const unMatch = (petId, userId) =>
+export const unMatch = (userId) =>
     dispatch =>
-        axios.delete('/api/match', {data:{petId: petId, userId: userId}})
+        axios.delete('/api/match', {data:{userId: userId}})
             .then((res) => {
-                dispatch(removeUnmatchedPets())
+                dispatch(removeUnmatchedUser())
                 dispatch(fetchMatches(userId))
             })
             .catch(err => console.log(err));
+
+export const fetchUserById = (petId) =>
+    dispatch => {
+        axios.get(`/api/user/findById/${userId}`)
+            .then((res) => {
+                dispatch(fetchOneUserById(res.data));
+            })
+            .catch(err => console.log(err));
+    };
+
+export const removeUnmatchedUser = () =>
+    dispatch => {
+        dispatch(removedUnmatchData());
+    };
 
 
 // REDUCER
