@@ -1,20 +1,23 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
-const ParkingLot =  require('./parkingLot')
+const Sequelize = require('sequelize');
+const db = require('../db');
+
+const Vehicle = require('./vehicle');
 
 const ParkingSpot = db.define('parkingSpot', {
-    location: {
-        type: ParkingLot
+    vehicleId: {
+        type: Sequelize.INTEGER,
+        primaryKey: true
     },
-    locationDescription: {
+    parkingLot: {
         type: Sequelize.STRING
     },
-    parkingPreferences: {
+    school: {
+        type: Sequelize.STRING
+    },
+    pindrop: {
+        type: Sequelize.STRING // GOOGLE MAPS PLUS CODE!
+    },
 
-
-    }
-
-
-})
+});
 
 module.exports = ParkingSpot;

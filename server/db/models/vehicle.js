@@ -1,29 +1,28 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
-const User = require('./user')
-const ParkingSpot = require('./parkingSpot')
-
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const Vehicle = db.define('vehicle', {
+    vehicleId: {
+        type: Sequelize.INTEGER,
+        unique: true,
+        primaryKey: true
+    },
+    ownerId: {
+        type: Sequelize.INTEGER,
+        unique: true
+    },
     color: {
         type: Sequelize.STRING
     },
     model: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
     },
     make: {
         type: Sequelize.STRING
     },
     year: {
         type: Sequelize.INTEGER
-    },
-    owner: {
-        type: User
-    },
-    location: {
-        type: ParkingSpot
-    },
-})
-
+    }
+});
 
 module.exports = Vehicle;

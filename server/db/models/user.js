@@ -1,13 +1,6 @@
-const crypto = require('crypto')
-const Sequelize = require('sequelize')
-const db = require('../db')
-const Schedule = require('./schedule')
-const Vehicle = require('./vehicle')
-const School = require('./school')
-
-
-
-
+const crypto = require('crypto');
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const User = db.define('user', {
     email: {
@@ -15,59 +8,44 @@ const User = db.define('user', {
         unique: true,
         allowNull: false,
         isEmail: true
-
     },
     password: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+    },
+    gender: {
+        type: Sequelize.ENUM('male', 'female', 'other')
+    },
+    accountType: {
+        type: Sequelize.ENUM('student', 'faculty')
     },
     salt: {
         type: Sequelize.STRING
     },
-    googleID: {
-        type: Sequelize.STRING,
-    },
-    facebookID: {
-        type: Sequelize.STRING,
-    },
-
-    gender: {
-        type: Sequelize.ENUM,
-        values:['Male', 'Female', 'Other']
-
+    parkingPreferences: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        defaultValue: []
     },
     phoneNumber: {
-        type: Sequelize.INTEGER,
-    },
-
-    accountType: {
-        type: Sequelize.ENUM,
-        values: ['Student', 'Faculty']
-    },
-    zipCode: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         defaultValue: ''
-    },
-    schedule: {
-        type: Schedule
-    },
-    vehicle: {
-        type: Vehicle
-    },
-    school: {
-        type: School
-    },
-})
+    }
+});
 
 module.exports = User;
 
-User.prototype.correctPassword = function (possiblePWD) {
-    return User.encryptPassword(possiblePWD, this.salt) === this.password
-}
+/**
+ * instanceMethods
+ */
+User.prototype.correctPassword = function (candidatePwd) {
+    return User.encryptPassword(candidatePwd, this.salt) === this.password
+};
 
-
+/**
+ * classMethods
+ */
 User.generateSalt = function () {
     return crypto.randomBytes(16).toString('base64')
-}
+};
 
 User.encryptPassword = function (plainText, salt) {
     return crypto
@@ -75,15 +53,19 @@ User.encryptPassword = function (plainText, salt) {
         .update(plainText)
         .update(salt)
         .digest('hex')
+};
 
-}
-
-const setSaltaNDpassword = user => {
-    if(user.changed('password')) {
-        user.salt = User.generateSalt()
+/**
+ * hooks
+ */
+const setSaltAndPassword = user => {
+    if (user.changed('password')) {
+        user.salt = User.generateSalt();
         user.password = User.encryptPassword(user.password, user.salt)
     }
-}
+};
 
-User.beforeCreate(setSaltAndPassword)
-User.beforeUpdate(setSaltAndPassword)
+
+User.beforeCreate(setSaltAndPassword);
+User.beforeUpdate(setSaltAndPassword);
+
