@@ -8,3 +8,6 @@ const Schedule = db.define('schedule', {
         defaultValue: []
     },
 })
+
+
+module.exports = Schedule;

@@ -16,3 +16,5 @@ const ParkingSpot = db.define('parkingSpot', {
 
 
 })
+
+module.exports = ParkingSpot;

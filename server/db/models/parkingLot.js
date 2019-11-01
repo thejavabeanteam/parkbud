@@ -11,3 +11,6 @@ const ParkingLot = db.define('parkingLot', {
         type: School
     },
 })
+
+
+module.exports = ParkingLot;

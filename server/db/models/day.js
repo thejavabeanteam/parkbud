@@ -14,3 +14,6 @@ const Day = db.define('day', {
         type: DayOfWeek
     },
 })
+
+
+module.exports = Day;

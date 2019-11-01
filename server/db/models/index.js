@@ -4,7 +4,9 @@
  *
  *    BlogPost.belongsTo(User)
  */
-
+const User = require('./user')
+const Match = require('./match')
+const Seen = require('./seen')
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
@@ -12,5 +14,7 @@
  * instead of: const User = require('../db/models/user')
  */
 module.exports = {
-
+    User,
+    Match,
+    Seen
 };

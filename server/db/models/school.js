@@ -15,3 +15,6 @@ const School = db.define('school', {
         type: Sequelize.INTEGER,
     }
 })
+
+
+module.exports = School;

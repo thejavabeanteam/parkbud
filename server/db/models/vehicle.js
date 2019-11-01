@@ -24,3 +24,6 @@ const Vehicle = db.define('vehicle', {
         type: ParkingSpot
     },
 })
+
+
+module.exports = Vehicle;
