@@ -2,14 +2,17 @@
   "name": "parkbud",
   "version": "0.1.0",
   "description": "Tinder for Parking at Cal Poly Pomona!",
-  "main": "secrets.js",
+  "main": "index.js",
   "private": true,
   "scripts": {
     "seed": "node seed.js",
     "sync": "concurrently \"npm install\" \"cd client && npm install\"",
-    "dev": "npm run seed && concurrently \"NODE_ENV='development' nodemon server -e html,js,scss --ignore public --ignore client\" \"NODE_ENV='development' cd client && npm start\" "
+    "server-dev": "npm run seed && nodemon server",
+    "client-dev": "npm run seed && NODE_ENV='development' cd client && npm start",
+    "dev": "npm run seed && concurrently \"npm run server-dev\" \"npm run client-dev\" "
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "concurrently": "^5.0.0",
@@ -23,6 +26,7 @@
     "node-sass": "^4.12.0",
     "node-sass-chokidar": "^1.3.5",
     "nodemon": "^1.19.4",
+    "passport": "^0.4.0",
     "pg": "^7.12.1",
     "sequelize": "^5.21.1",
     "webpack": "^4.41.0"
