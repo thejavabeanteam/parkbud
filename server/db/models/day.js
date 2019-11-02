@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 
-const User = require('./user');
+const User = require("./user");
 
 const Day = db.define('day', {
     userId: {
@@ -13,11 +13,15 @@ const Day = db.define('day', {
         primaryKey: true
     },
     arrival:{
-        type: Sequelize.STRING
+        type: Sequelize.TIME
     },
     departure: {
-        type: Sequelize.STRING,
+        type: Sequelize.TIME,
         isAfter: this.arrival
+    },
+    earliest: {
+        type: Sequelize.TIME,
+        isBefore: this.arrival
     }
 });
 
