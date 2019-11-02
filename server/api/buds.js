@@ -1,12 +1,34 @@
 const router = require('express').Router();
+const sequelize = require('sequelize');
+const Op = require('sequelize').Op;
+const {User, Day} = require('../db/models');
 
 module.exports = router;
 
-router.get('/', (req, res, next) => {
-    // use a query string/user pref's to display all buds with matching schedule
-    // and matching parking lot preference
-});
-
-router.get('/findById/:userId', (req, res, next) => {
-    // view a user's profile
+// get all buds with a complimentary schedule and matching parking preference
+router.get('/:userId', (req, res, next) => {
+    User.findAll({
+        include: [{
+            model: Day,
+            where: {
+                dayOfWeek: {
+                    [Op.eq]: req.body.dayOfWeek
+                },
+                departure: {
+                    [Op.gte]: req.body.earliest,
+                    [Op.lte]: req.body.arrival
+                }
+            }
+        }],
+        where: {
+            id: {
+                [Op.ne]: req.params.userId
+            },
+            parkingPreferences: {
+                [Op.overlap]: req.body.parkingPreferences
+            }
+        }
+    })
+        .then(buds => res.json(buds))
+        .catch(next)
 });
