@@ -1,7 +1,6 @@
 const router = require('express').Router();
-const {
-    Match
-} = require('../db/models');
+const {Match} = require('../db/models');
+
 module.exports = router;
 
 //Get all matches belonging to the logged-in user
@@ -35,7 +34,7 @@ router.post('/', (req, res, next) => {
 
 // on Contact set the match.contacted to true
 router.put('/:currentId/:matchId', (req, res, next) => {
-    Match.update({contacted : true}, {
+    Match.update({contacted: true}, {
         where: {
             currentId: req.params.currentId,
             matchId: req.params.matchId
@@ -44,7 +43,7 @@ router.put('/:currentId/:matchId', (req, res, next) => {
         .then(result => res.json(result))
 });
 
-//Delete a match
+// Delete a match
 router.delete('/', (req, res, next) => {
     Match.destroy({
         where: {

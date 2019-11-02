@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const {User, Match} = require('../db/models');
+const {User} = require('../db/models');
+
 module.exports = router;
 
 //get a single user (to set them as current user on state)
