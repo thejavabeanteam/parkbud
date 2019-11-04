@@ -4,19 +4,8 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { withRouter } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
-import { sendEmail, fetchMatches, removeUnmatchedPets } from '../store';
+import { sendEmail, fetchMatches, removeUnmatchedSpots } from '../store';
 
-// const className = {
-//     base: 'myClass',
-//     afterOpen: 'myClass_after-open',
-//     beforeClose: 'myClass_before-close'
-// }
-
-// const overlayClassName = {
-//     base: 'myOverlayClass',
-//     afterOpen: 'myOverlayClass_after-open',
-//     beforeClose: 'myOverlayClass_before-close'
-// }
 
 const customStyles = {
     content: {
@@ -56,16 +45,16 @@ export class EmailPreview extends React.Component {
         this.setState({ modalIsOpen: false });
     }
 
-    onSend(user, spot) {
-        sendEmail(user, spot);
+    onSend(currentUser, user) {
+        sendEmail(currentUser, user);
         this.closeModal();
-        this.props.resetMatches(user);
+        this.props.resetMatches(currentUser);
         this.props.history.push('/matches');
     }
 
     render() {
         const {
-            user, spot, name, contacted,
+            currentUser, user, name, contacted,
         } = this.props;
         const buttonClass = (name === 'matches') ? 'emailEnvelope smallIcon' : 'emailEnvelope largeIconRight';
         const wasContacted = contacted ? 'check' : 'envelope-o';
@@ -80,8 +69,8 @@ export class EmailPreview extends React.Component {
                     contentLabel="Example Modal"
                 >
                     <div id="email">
-                        <div className="email-header">To: {spot.contact.email.$t}
-                            <br />Subject: Asking for a switch with your parking spot
+                        <div className="email-header">To: {user.contact.email.$t}
+                            <br />Subject: Requesting for a switch of your parking spot.
                         </div>
                         <div>
                             <h3 className="email-greeting">Greetings from ParkBud!</h3>
@@ -93,17 +82,19 @@ export class EmailPreview extends React.Component {
                             </p>
                             <h5>User Profile:</h5>
                             <div className="email-details">
-                                <strong>Email: </strong><a href={user.email}>{user.email}</a>
+                                <strong>Name: </strong>{currentUser.name}
                             </div>
                             <div className="email-details">
-                                <strong>Phone Number: </strong>{user.phoneNumber}
+                                <strong>Email: </strong><a href={currentUser.email}>{currentUser.email}</a>
                             </div>
                             <div className="email-details">
-                                <strong>Location: </strong>{user.zipCode}
+                                <strong>Phone Number: </strong>{currentUser.phoneNumber}
                             </div>
                             <div className="email-details">
-                                <strong>Vehicle: </strong>
-                                <div className="email-text plain">{user.vehicle}</div>
+                                <strong>Location: </strong>{currentUser.zipCode}
+                            </div>
+                            <div className="email-details">
+                                <strong>Vehicle: </strong>{currentUser.vehicle}
                             </div>
                             <div>
                                 <p className="email-text plain">
@@ -113,7 +104,7 @@ export class EmailPreview extends React.Component {
                                 <div className="email-signature">The ParkBud Team</div>
                             </div>
                             <button className="email-button" id="cancel" type="button" onClick={this.closeModal}>Cancel</button>
-                            <button className="email-button" type="button" onClick={() => this.onSend(user, spot)}>Yes! Send it!</button>
+                            <button className="email-button" type="button" onClick={() => this.onSend(currentUser, user)}>Yes! Send it!</button>
                         </div>
                     </div>
                 </Modal>
@@ -125,9 +116,9 @@ export class EmailPreview extends React.Component {
 
 // CONTAINER
 const mapDispatch = dispatch => ({
-    resetMatches(user) {
+    resetMatches(currentUser) {
         dispatch(removeUnmatchedSpots());
-        dispatch(fetchMatches(user.id));
+        dispatch(fetchMatches(currentUser.id));
     },
 });
 

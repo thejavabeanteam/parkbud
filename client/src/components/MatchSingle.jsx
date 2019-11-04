@@ -7,9 +7,9 @@ import SingleSpot from './SingleSpot';
 
 class MatchSingle extends Component {
     render() {
-        const searchSpot = this.props.match.params.SpotId;
-        const spotDetail = this.props.matchPets.filter(matchSpot => { if (matchSpot.id !== undefined) return matchSpot.id.$t === searchSpot })[0];
-        const contacted = this.props.matches.filter(match => match.SpotId === Number(searchSpot))[0].contacted
+        const searchSpot = this.props.match.params.userId;
+        const spotDetail = this.props.matchSpots.filter(matchSpot => { if (matchSpot.id !== undefined) return matchSpot.id.$t === searchSpot })[0];
+        const contacted = this.props.matches.filter(match => match.userId === Number(searchSpot))[0].contacted
         return (
             <div className="flex">
                 <div id="singleMatchContainer">
@@ -28,8 +28,8 @@ class MatchSingle extends Component {
                                 <FontAwesome name="heart" />
                                 <FontAwesome name="remove" />
                             </button>
-                            <EmailPreview user={this.props.currentUser} spot={spotDetail} name={'matchSingle'} contacted={contacted} />
-                            <SingleSpot spot={spotDetail} />
+                            <EmailPreview currentUser={this.props.currentUser} user={spotDetail} name={'matchSingle'} contacted={contacted} />
+                            <SingleSpot user={spotDetail} />
                         </div>
                     ) : (
                         <p>Loading</p>
@@ -47,12 +47,12 @@ const mapState = state => ({
 });
 
 const mapDispatch = (dispatch, ownProps) => ({
-    onClick(user, spot) {
-        sendEmail(user, spot);
+    onClick(currentUser, user) {
+        sendEmail(currentUser, user);
     },
-    onUnmatch(spot, userId) {
-        if (window.confirm(`Are you sure you want to delete your match with ${spot.name.$t}?`))
-            dispatch(unMatch(spot.id.$t, userId));
+    onUnmatch(user, currentUserId) {
+        if (window.confirm(`Are you sure you want to delete your match with ${user.name.$t}?`))
+            dispatch(unMatch(user.id.$t, currentUserId));
         ownProps.history.push('/matches');
     },
 });

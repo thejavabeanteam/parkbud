@@ -19,6 +19,10 @@ export const UserHome = (props) => {
                     <p>{user.name}</p>
                 </div>
                 <div>
+                    <h4>Sex:</h4>
+                    <p>{user.sex}</p>
+                </div>
+                <div>
                     <h4>Email:</h4>
                     <p>{user.email}</p>
                 </div>
@@ -31,16 +35,28 @@ export const UserHome = (props) => {
                     <p>{user.zipCode}</p>
                 </div>
                 <div>
-                    <h4>Parking Spot Preference:</h4>
-                    {!user.parkingNamePreferences.length
+                    <h4>Parking Lot Preference:</h4>
+                    {!user.parkingPreferences.length
                         ? <p>None</p>
-                        : <ul>{user.parkingNamePreferences.map((parkingName, index) =>
-                            <li key={index}>{parkingName}</li>)}
+                        : <ul>{user.parkingPreferences.map((parking, index) =>
+                            <li key={index}>{parking}</li>)}
                         </ul> }
+                </div>
+                <div>
+                    <h4>Current Parking:</h4>
+                    {!user.currentParkingLot.length
+                        ? <p>None</p>
+                        : <ul>{user.currentParkingLot.map((parking, index) =>
+                            <li key={index}>{parking}</li>)}
+                        </ul>}
                 </div>
                 <div>
                     <h4>Current Vehicle:</h4>
                     <p>{user.vehicle}</p>
+                </div>
+                <div>
+                    <h4>Name:</h4>
+                    <p>{user.schedule}</p>
                 </div>
                 <div>
                     <h4>Message:</h4>

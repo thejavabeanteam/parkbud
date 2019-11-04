@@ -10,16 +10,16 @@ class Matches extends Component {
                 <h1>My Matches</h1>
                 <div className="matchesList">
                     {this.props.matches.length ?
-                        this.props.matchSpots.map(spot => {
-                            const contacted = spot.id && this.props.matches.filter(match => match.spotId === Number(spot.id.$t))[0].contacted
+                        this.props.matchSpots.map(user => {
+                            const contacted = user.id && this.props.matches.filter(match => match.userId === Number(user.id.$t))[0].contacted
                             return (
-                                spot.id &&
-                                <div key={spot.id.$t} className="matches spotCard">
-                                    <Link to={`matches/${spot.id.$t}`}>
+                                user.id &&
+                                <div key={user.id.$t} className="matches spotCard">
+                                    <Link to={`matches/${user.id.$t}`}>
                                         <img
                                             src={
-                                                spot.media.photos
-                                                    ? spot.media.photos.photo[3].$t
+                                                user.media.photos
+                                                    ? user.media.photos.photo[3].$t
                                                     : 'http://biorem.org/wp-content/uploads/2016/07/not-available.png'}
                                             className="spotPic rounded"
                                             alt="spot profile pic"
@@ -27,7 +27,7 @@ class Matches extends Component {
                                         <button
                                             className="unmatch smallIcon"
                                             onClick={(event) => {
-                                                event.preventDefault(); this.props.onUnmatch(spot, this.props.currentUser.id);
+                                                event.preventDefault(); this.props.onUnmatch(user, this.props.currentUser.id);
                                             }}
                                         >
                                             <FontAwesome name="heart" />
@@ -36,16 +36,16 @@ class Matches extends Component {
                                         <button
                                             className="emailEnvelope smallIcon"
                                             onClick={(event) => {
-                                                event.preventDefault(); this.props.onClick(this.props.currentUser, spot);
+                                                event.preventDefault(); this.props.onClick(this.props.currentUser, user);
                                             }}
                                         > <FontAwesome name="envelope-o" />
                                         </button>
                                         <div id="spotInfo">
-                                            <h1>{spot.name.$t}</h1>
-                                            <h2>{spot.parkingName.$t}</h2>
+                                            <h1>{user.name.$t}</h1>
+                                            <h2>{user.parking.$t}</h2>
                                         </div>
                                     </Link>
-                                    <EmailPreview user={this.props.currentUser} spot={spot} name="matches" contacted={contacted} />
+                                    <EmailPreview currentUser={this.props.currentUser} user={user} name="matches" contacted={contacted} />
                                 </div>
                             )})
                         : <p>NO MATCHES!</p>
@@ -63,12 +63,12 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-    onUnmatch(spot, userId) {
-        if (window.confirm(`Are you sure you want to delete your match with ${spot.name.$t}?`))
-            dispatch(unMatch(spot.id.$t, userId));
+    onUnmatch(user, curretnUserId) {
+        if (window.confirm(`Are you sure you want to delete your match with ${user.name.$t}?`))
+            dispatch(unMatch(user.id.$t, currentUserId));
     },
-    onClick(user, spot) {
-        sendEmail(user, spot);
+    onClick(currentUser, user) {
+        sendEmail(currentUser, user);
     },
 });
 
