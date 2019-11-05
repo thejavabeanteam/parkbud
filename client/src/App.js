@@ -1,26 +1,40 @@
-import React from 'react';
-// import the logo once it's been created
-// import the css for the App component once it has been created
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+// import logout store
+// import the Menu component
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        {/*<img src={logo} className="App-logo" alt="logo" />*/}
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://www.github.com/thejavabeanteam/parkbud"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ParkBud
-        </a>
-      </header>
-    </div>
-  );
+/**
+ * COMPONENT
+ *  The Main component is our 'picture frame' - it displays the navbar and anything
+ *  else common to our entire app. The 'picture' inside the frame is the space
+ *  rendered out by the component's `children`.
+ */
+class App extends Component {
+  render() {
+    const { children } = this.props;
+    return (
+        <div className="App">
+          {/*Place the Menu here*/}
+          {children}
+        </div>
+    );
+  }
 }
 
-export default App;
+const mapState = state => ({
+  isLoggedIn: !!state.currentUser.id,
+});
+const mapDispatch = dispatch => ({
+  handleClick() {
+    // add the logout function to the App
+  },
+});
+export default withRouter(connect(mapState, mapDispatch)(App));
+/**
+ * PROP TYPES
+ */
+App.propTypes = {
+  children: PropTypes.object,
+};
