@@ -18,7 +18,7 @@ export const UserHome = (props) => {
     }
     
     const { isReadOnly, deleteUser } = props;
-    const userId = user.id;
+    const userId = this.props.match.params.userId;
     return (
         <div className="userProfile">
             <h1>My Profile</h1>
