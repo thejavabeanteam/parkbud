@@ -1,104 +1,104 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { getUserById, deleteAccount, clearViewProfile } from '../store';
-import Matches from './Matches';
+import {connect} from 'react-redux';
+import {NavLink} from 'react-router-dom';
+import {getUserProfile, deleteAccount, clearViewProfile} from '../store';
 
 // COMPONENT
 
-export const UserHome = (props) => {
+class UserHome extends Component {
     componentDidMount() {
         this.props.onLoad(this.props.match.params.userId);
     }
-    
+
     componentWillUnmount() {
         const currentProfile = this.props.match.params.userId;
         this.props.onDismount(currentProfile);
     }
-    
-    const { isReadOnly, deleteUser } = props;
-    const userId = this.props.match.params.userId;
-    return (
-        <div className="userProfile">
-            <h1>My Profile</h1>
-            <div className="userInfo">
-                <div>
-                    <h4>Name:</h4>
-                    <p>{user.name}</p>
+
+    render() {
+        const {user, isReadOnly, deleteUser} = this.props;
+        return (
+            <div className="userProfile">
+                <h1>My Profile</h1>
+                <div className="userInfo">
+                    <div>
+                        <h4>Name:</h4>
+                        <p>{user.name}</p>
+                    </div>
+                    <div>
+                        <h4>Gender:</h4>
+                        <p>{user.gender}</p>
+                    </div>
+                    <div>
+                        <h4>Email:</h4>
+                        <p>{user.email}</p>
+                    </div>
+                    <div>
+                        <h4>Phone Number:</h4>
+                        <p>{user.phoneNumber}</p>
+                    </div>
+                    <div>
+                        <h4>Zip Code:</h4>
+                        <p>{user.zipCode}</p>
+                    </div>
+                    <div>
+                        <h4>Parking Lot Preference:</h4>
+                        {!user.parkingPreferences.length
+                            ? <p>None</p>
+                            : <ul>{user.parkingPreferences.map((parking, index) =>
+                                <li key={index}>{parking}</li>)}
+                            </ul>}
+                    </div>
+                    <div>
+                        <h4>Current Parking:</h4>
+                        {!user.currentParkingLot.length
+                            ? <p>None</p>
+                            : <ul>{user.currentParkingLot.map((parking, index) =>
+                                <li key={index}>{parking}</li>)}
+                            </ul>}
+                    </div>
+                    <div>
+                        <h4>Current Vehicle:</h4>
+                        <p>{user.vehicle}</p>
+                    </div>
+                    <div>
+                        <h4>Name:</h4>
+                        <p>{user.schedule}</p>
+                    </div>
+                    <div>
+                        <h4>Message:</h4>
+                        <p>{user.message}</p>
+                    </div>
                 </div>
-                <div>
-                    <h4>Sex:</h4>
-                    <p>{user.sex}</p>
-                </div>
-                <div>
-                    <h4>Email:</h4>
-                    <p>{user.email}</p>
-                </div>
-                <div>
-                    <h4>Phone Number:</h4>
-                    <p>{user.phoneNumber}</p>
-                </div>
-                <div>
-                    <h4>Zip Code:</h4>
-                    <p>{user.zipCode}</p>
-                </div>
-                <div>
-                    <h4>Parking Lot Preference:</h4>
-                    {!user.parkingPreferences.length
-                        ? <p>None</p>
-                        : <ul>{user.parkingPreferences.map((parking, index) =>
-                            <li key={index}>{parking}</li>)}
-                        </ul> }
-                </div>
-                <div>
-                    <h4>Current Parking:</h4>
-                    {!user.currentParkingLot.length
-                        ? <p>None</p>
-                        : <ul>{user.currentParkingLot.map((parking, index) =>
-                            <li key={index}>{parking}</li>)}
-                        </ul>}
-                </div>
-                <div>
-                    <h4>Current Vehicle:</h4>
-                    <p>{user.vehicle}</p>
-                </div>
-                <div>
-                    <h4>Name:</h4>
-                    <p>{user.schedule}</p>
-                </div>
-                <div>
-                    <h4>Message:</h4>
-                    <p>{user.message}</p>
-                </div>
+                {isReadOnly
+                    ? null
+                    : (<div className="userButtons">
+                        <NavLink to="/updateProfile">
+                            <button>Edit Your Profile</button>
+                        </NavLink>
+                        <NavLink to="/login">
+                            <button id="deleteUser" onClick={event => deleteUser(event, user)}>Delete</button>
+                        </NavLink>
+                    </div>)
+                }
             </div>
-            {isReadOnly 
-            ? (null)
-            : (<div className="userButtons">
-                <NavLink to="/updateProfile">
-                    <button>Edit Your Profile</button>
-                </NavLink>
-                <NavLink to="/login">
-                    <button id="deleteUser" onClick={event => deleteUser(event, userId)}>Delete</button>
-                </NavLink>
-            </div>
-            <Matches userId={props.user.id} />)}
-        </div>
-    );
-};
+        )
+    }
+}
 
 
 // CONTAINER
-const mapState = state => ({ user: state.profile });
+const mapState = state => ({user: state.profile});
 
 const mapDispatch = dispatch => ({
     onLoad(id) {
-        dispatch(getUserById(id));
+        dispatch(getUserProfile(id));
     },
-    deleteUser(event, userId) {
+    deleteUser(event, user) {
         event.preventDefault();
         if (window.confirm('Are you sure you want to delete your account?')) {
-            dispatch(deleteAccount(userId));
+            dispatch(deleteAccount(user));
         }
     },
     onDismount(id) {

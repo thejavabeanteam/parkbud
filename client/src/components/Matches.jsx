@@ -44,7 +44,8 @@ class Matches extends Component {
                                         > <FontAwesome name="envelope-o" />
                                         </button>
                                         <div id="budInfo">
-                                            <h1>{match.email}</h1>
+                                            <h1>{match.name}</h1>
+                                            <h2>{match.email}</h2>
                                         </div>
                                     </Link>
                                     <EmailPreview currentUser={this.props.currentUser} user={match} name="matches" contacted={contacted} />
