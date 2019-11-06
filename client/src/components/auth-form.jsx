@@ -115,7 +115,20 @@ const AuthForm = (props) => {
 
 
 const mapLogin = state => ({
-    error: state.currentUser.error,
+    return {
+        name: 'login',
+        displayName: 'Login',
+        error: state.currentUser.error
+    }
+});
+
+const mapSignup = state => ({
+    return {
+        name: 'signup',
+        displayName: 'Sign Up',
+        error: state.currentUser.error
+    }
+});
 });
 
 
