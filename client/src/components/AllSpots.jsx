@@ -60,7 +60,7 @@ const mapDispatch = (dispatch, ownProps) => ({
     loadMatches(id) {
         dispatch(fetchMatches(id));
     },
-    onReject(userId, currentUserId, parkingLot) {
+    onReject(matchId, currentUser.id) {
         dispatch(rejectSpot(userId, currentUserId, parkingLot));
     },
     onLove(userId, currentUserId, parkingLot) {
