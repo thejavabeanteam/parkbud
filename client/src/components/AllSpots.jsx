@@ -18,7 +18,6 @@ class AllBuds extends Component {
         this.props.onLoad(this.props.currentUser);
     }
 
-    }
 
     render() {
         const { users, currentUser, onReject, onLove, onLoad, match  } = this.props
