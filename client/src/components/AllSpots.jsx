@@ -21,7 +21,6 @@ class AllBuds extends Component {
 
     render() {
         const { users, currentUser, onReject, onLove, onLoad, match  } = this.props
-        const parkingLotArray = users[match.params.type];
         return (
             <div className="container">
                 <div id="card-stack" />
