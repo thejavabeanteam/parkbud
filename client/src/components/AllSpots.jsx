@@ -54,7 +54,7 @@ const mapState = state => ({
 const mapDispatch = (dispatch, ownProps) => ({
     onLoad(user) {
         for (let i = 0; i < 25; i++) {
-            dispatch(fetchAllSpots(ownProps.match.params.type, user));
+            dispatch(fetchAllBuds(user));
         }
     },
     loadMatches(id) {
