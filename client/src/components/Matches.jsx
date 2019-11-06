@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { sendEmail, unMatch } from '../store';
 import { connect } from 'react-redux';
@@ -10,24 +11,26 @@ class Matches extends Component {
                 <h1>My Matches</h1>
                 <div className="matchesList">
                     {this.props.matches.length ?
-                        this.props.matchSpots.map(user => {
-                            const contacted = user.id && this.props.matches.filter(match => match.userId === Number(user.id.$t))[0].contacted
+                        this.props.matches.map(match => {
+                            const contacted = match.id && match.contacted
                             return (
-                                user.id &&
-                                <div key={user.id.$t} className="matches spotCard">
-                                    <Link to={`matches/${user.id.$t}`}>
+                                match.id &&
+                                <div key={match.id} className="matches userCard">
+                                    <Link to={`matches/${match.id}`}>
                                         <img
                                             src={
-                                                user.media.photos
-                                                    ? user.media.photos.photo[3].$t
-                                                    : 'http://biorem.org/wp-content/uploads/2016/07/not-available.png'}
+                                                // eventually add the ability for user to upload profile pics
+                                                // match.media.photos
+                                                //     ? match.media.photos.photo[3]
+                                                //     :
+                                                    'http://biorem.org/wp-content/uploads/2016/07/not-available.png'}
                                             className="spotPic rounded"
                                             alt="spot profile pic"
                                         />
                                         <button
                                             className="unmatch smallIcon"
                                             onClick={(event) => {
-                                                event.preventDefault(); this.props.onUnmatch(user, this.props.currentUser.id);
+                                                event.preventDefault(); this.props.onUnmatch(match, this.props.currentUser.id);
                                             }}
                                         >
                                             <FontAwesome name="heart" />
@@ -36,16 +39,15 @@ class Matches extends Component {
                                         <button
                                             className="emailEnvelope smallIcon"
                                             onClick={(event) => {
-                                                event.preventDefault(); this.props.onClick(this.props.currentUser, user);
+                                                event.preventDefault(); this.props.onClick(this.props.currentUser, match);
                                             }}
                                         > <FontAwesome name="envelope-o" />
                                         </button>
-                                        <div id="spotInfo">
-                                            <h1>{user.name.$t}</h1>
-                                            <h2>{user.parking.$t}</h2>
+                                        <div id="budInfo">
+                                            <h1>{match.email}</h1>
                                         </div>
                                     </Link>
-                                    <EmailPreview currentUser={this.props.currentUser} user={user} name="matches" contacted={contacted} />
+                                    <EmailPreview currentUser={this.props.currentUser} user={match} name="matches" contacted={contacted} />
                                 </div>
                             )})
                         : <p>NO MATCHES!</p>
@@ -58,17 +60,16 @@ class Matches extends Component {
 
 const mapState = state => ({
     currentUser: state.currentUser,
-    matches: state.matches,
-    matchSpots: state.matchSpots,
+    matches: state.matches
 });
 
 const mapDispatch = dispatch => ({
-    onUnmatch(user, curretnUserId) {
-        if (window.confirm(`Are you sure you want to delete your match with ${user.name.$t}?`))
-            dispatch(unMatch(user.id.$t, currentUserId));
+    onUnmatch(match, currentUserId) {
+        if (window.confirm(`Are you sure you want to delete your match with ${match.email}?`))
+            dispatch(unMatch(match.id, currentUserId));
     },
-    onClick(currentUser, user) {
-        sendEmail(currentUser, user);
+    onClick(currentUser, match) {
+        sendEmail(currentUser, match);
     },
 });
 
