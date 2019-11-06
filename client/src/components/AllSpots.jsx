@@ -47,7 +47,7 @@ class AllBuds extends Component {
 }
 
 const mapState = state => ({
-    users: state.users,
+    buds: state.buds,
     currentUser: state.currentUser,
 });
 
