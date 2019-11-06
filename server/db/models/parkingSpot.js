@@ -1,10 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
 
-const Vehicle = require('./vehicle');
-
 const ParkingSpot = db.define('parkingSpot', {
-    vehicleId: {
+    ownerId: {
         type: Sequelize.INTEGER,
         primaryKey: true
     },

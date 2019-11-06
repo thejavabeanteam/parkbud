@@ -29,27 +29,31 @@ const days = [
     {
         "userId": 1,
         "dayOfWeek": "Monday",
-        "arrival": "9 am",
-        "departure": "2 pm"
+        "arrival": "0900",
+        "earliest": "0830",
+        "departure": "1400"
     },
     {
         "userId": 1,
         "dayOfWeek": "Tuesday",
-        "arrival": "12 pm",
-        "departure": "5 pm"
+        "arrival": "1200",
+        "earliest": "1100",
+        "departure": "1700"
     },
     {
         "userId": 2,
         "dayOfWeek": "Monday",
-        "arrival": "2 pm",
-        "departure": "7 pm"
+        "arrival": "1400",
+        "earliest": "1315",
+        "departure": "1700"
 
     },
     {
         "userId": 2,
         "dayOfWeek": "Tuesday",
-        "arrival": "5 pm",
-        "departure": "8 pm"
+        "arrival": "17:00",
+        "earliest": "1645",
+        "departure": "20:00"
     }
 ];
 
