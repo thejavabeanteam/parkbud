@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { deleteAccount } from '../store';
+import { getUserById, deleteAccount, clearViewProfile } from '../store';
 import Matches from './Matches';
 
 // COMPONENT
