@@ -18,7 +18,6 @@ class AllBuds extends Component {
         this.props.onLoad(this.props.currentUser);
     }
 
-    componentWillUnmount() {
         const parking = this.props.match.params.type;
         this.props.onDismount(parking);
     }
