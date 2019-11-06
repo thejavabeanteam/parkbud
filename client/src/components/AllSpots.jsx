@@ -18,7 +18,6 @@ class AllBuds extends Component {
         this.props.onLoad(this.props.currentUser);
     }
 
-        this.props.onDismount(parking);
     }
 
     render() {
