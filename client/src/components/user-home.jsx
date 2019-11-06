@@ -101,6 +101,9 @@ const mapDispatch = dispatch => ({
             dispatch(deleteAccount(userId));
         }
     },
+    onDismount(id) {
+        dispatch(clearViewProfile(id));
+    }
 });
 
 
