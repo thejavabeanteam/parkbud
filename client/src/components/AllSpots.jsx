@@ -13,7 +13,7 @@ const CustomAlertRight = () => (
     <img alt="accept pet icon" src="../favorite-icon.png" className="icon" />
   </span>);
 
-class AllSpots extends Component {
+class AllBuds extends Component {
     componentDidMount() {
         this.props.onLoad(this.props.currentUser);
     }
