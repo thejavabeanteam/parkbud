@@ -8,7 +8,16 @@ import Matches from './Matches';
 // COMPONENT
 
 export const UserHome = (props) => {
-    const { user, deleteUser } = props;
+    componentDidMount() {
+        this.props.onLoad(this.props.match.params.userId);
+    }
+    
+    componentWillUnmount() {
+        const currentProfile = this.props.match.params.userId;
+        this.props.onDismount(currentProfile);
+    }
+    
+    const { isReadOnly, deleteUser } = props;
     const userId = user.id;
     return (
         <div className="userProfile">
