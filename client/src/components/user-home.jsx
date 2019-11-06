@@ -82,7 +82,7 @@ export const UserHome = (props) => {
                     <button id="deleteUser" onClick={event => deleteUser(event, userId)}>Delete</button>
                 </NavLink>
             </div>
-            <Matches userId={props.user.id} />
+            <Matches userId={props.user.id} />)}
         </div>
     );
 };
