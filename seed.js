@@ -59,7 +59,6 @@ const days = [
 
 const vehicles = [
     {
-        "vehicleId": 1,
         "ownerId": 1,
         "color": "black",
         "model": "ford",
@@ -67,7 +66,6 @@ const vehicles = [
         "year": 2012
     },
     {
-        "vehicleId": 2,
         "ownerId": 2,
         "color": "red",
         "model": "mazda",
@@ -78,7 +76,7 @@ const vehicles = [
 
 const parkingSpots = [
     {
-        "vehicleId": 1,
+        "ownerId": 1,
         "parkingLot": "Lot M",
         "school": "Cal Poly Pomona",
         "pindrop": "354C+53 Walnut, California"
