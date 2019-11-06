@@ -89,7 +89,7 @@ export const UserHome = (props) => {
 
 
 // CONTAINER
-const mapState = state => ({ user: state.currentUser });
+const mapState = state => ({ user: state.profile });
 
 const mapDispatch = dispatch => ({
     deleteUser(event, userId) {
