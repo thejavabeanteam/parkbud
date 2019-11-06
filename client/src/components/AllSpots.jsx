@@ -66,7 +66,6 @@ const mapDispatch = (dispatch, ownProps) => ({
     onLove(userId, currentUserId, parkingLot) {
         dispatch(addMatches(userId, currentUserId, parkingLot));
     },
-    onDismount(parkingLot) {
         dispatch(clearSpots(parkingLot));
     },
 });
