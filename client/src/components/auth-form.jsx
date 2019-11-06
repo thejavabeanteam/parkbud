@@ -50,16 +50,6 @@ const AuthForm = (props) => {
 
                             </div>
                         </form>
-                        {/*login form with google*/}
-                        <div className="social-container">
-                            <span>or Log in with </span>
-                            <a href="/auth/google" >
-                                <FontAwesome name="google" className="social google" />
-                            </a>
-                            <a href="/auth/facebook">
-                                <FontAwesome name="facebook" className="social facebook" />
-                            </a>
-                        </div>
                     </div>
                     <div className="sign-up-htm">
                         {/*signup form */}
@@ -93,18 +83,6 @@ const AuthForm = (props) => {
                                 </button>
                             </div>
                             {/* error && error.response && <div> {error.response.data} </div> */}
-                            <div className="social-container">
-                                <span>or Sign up with </span>
-                                <a href="/auth/google" >
-                                    <FontAwesome name="google" className="social google" />
-                                </a>
-                                <a href="/auth/facebook" >
-                                    <FontAwesome
-                                        name="facebook"
-                                        className="social facebook"
-                                    />
-                                </a>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -114,23 +92,21 @@ const AuthForm = (props) => {
 };
 
 
-const mapLogin = state => ({
+const mapLogin = state => {
     return {
         name: 'login',
         displayName: 'Login',
         error: state.currentUser.error
     }
-});
+};
 
-const mapSignup = state => ({
+const mapSignup = state => {
     return {
         name: 'signup',
         displayName: 'Sign Up',
         error: state.currentUser.error
     }
-});
-});
-
+};
 
 const mapDispatch = (dispatch, ownProps) => ({
     handleSubmit(evt, type) {
@@ -139,7 +115,7 @@ const mapDispatch = (dispatch, ownProps) => ({
         const password = evt.target.password.value;
         const redirect = type === 'login' ? '/buds' : '/createProfile';
         Promise.resolve(dispatch(auth(email, password, type))).then((res) => {
-            ownProps.history.push(redirect)
+            ownProps.history.push(redirect);
             dispatch(fetchMatches(res))
         });
     },
