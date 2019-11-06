@@ -1,11 +1,10 @@
 const router = require('express').Router();
-const sequelize = require('sequelize');
 const Op = require('sequelize').Op;
 const {User, Day} = require('../db/models');
 
 module.exports = router;
 
-// get all buds with a complimentary schedule and matching parking preference
+// gets all buds with a complimentary schedule and matching parking preference
 router.get('/:userId', (req, res, next) => {
     User.findAll({
         include: [{

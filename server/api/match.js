@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Match} = require('../db/models');
+const {Match, User} = require('../db/models');
 
 module.exports = router;
 
@@ -11,7 +11,14 @@ router.get('/:userId', (req, res, next) => {
             currentId: req.params.userId
         }
     })
-        .then(matches => res.json(matches))
+        .then(matches => matches.map( match =>
+            User.findAll({
+                where: {
+                    id: match.matchId
+                }
+            })
+                .then(profiles => res.json(profiles))
+        ))
         .catch(next)
 });
 
@@ -51,11 +58,11 @@ router.delete('/', (req, res, next) => {
             matchId: req.body.matchId
         }
     }).then(Match.destroy({
-            where: {
-                currentId: req.body.matchId,
-                matchId: req.body.currentId
-            }
-        }))
+        where: {
+            currentId: req.body.matchId,
+            matchId: req.body.currentId
+        }
+    }))
         .then(() => res.sendStatus(204))
         .catch(next)
 });

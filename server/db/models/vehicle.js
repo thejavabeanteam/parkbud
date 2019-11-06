@@ -2,11 +2,6 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Vehicle = db.define('vehicle', {
-    vehicleId: {
-        type: Sequelize.INTEGER,
-        unique: true,
-        primaryKey: true
-    },
     ownerId: {
         type: Sequelize.INTEGER,
         unique: true

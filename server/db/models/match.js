@@ -10,8 +10,8 @@ const Match = db.define('match', {
         type: Sequelize.INTEGER,
         primaryKey: true
     },
-    messageHistory: {
-        type: Sequelize.ARRAY(Sequelize.STRING)
+    contacted: {
+        type: Sequelize.BOOLEAN
     },
 
 });
