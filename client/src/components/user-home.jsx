@@ -92,6 +92,9 @@ export const UserHome = (props) => {
 const mapState = state => ({ user: state.profile });
 
 const mapDispatch = dispatch => ({
+    onLoad(id) {
+        dispatch(getUserById(id));
+    },
     deleteUser(event, userId) {
         event.preventDefault();
         if (window.confirm('Are you sure you want to delete your account?')) {
