@@ -114,7 +114,7 @@ const AuthForm = (props) => {
 };
 
 
-const mapState = state => ({
+const mapLogin = state => ({
     error: state.currentUser.error,
 });
 
