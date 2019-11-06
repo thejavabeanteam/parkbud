@@ -72,7 +72,9 @@ export const UserHome = (props) => {
                     <p>{user.message}</p>
                 </div>
             </div>
-            <div className="userButtons">
+            {isReadOnly 
+            ? (null)
+            : (<div className="userButtons">
                 <NavLink to="/updateProfile">
                     <button>Edit Your Profile</button>
                 </NavLink>
