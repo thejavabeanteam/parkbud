@@ -1,6 +1,6 @@
 const router = require('express').Router();
 // import User model once created
-const User = require('../db/')
+const User = require('../db/');
 
 module.exports = router;
 
