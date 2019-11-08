@@ -19,4 +19,4 @@
 
 Demo of the wireframe link: https://marvelapp.com/4gi5729
 
-[API Docs](https://app.swaggerhub.com/apis-docs/thejavabeanteam/ParkBud/1.0.0)
+[API Docs](http://cs480-projects.github.io/teams-fall2019/TheJavaBeanTeam/api.html)
