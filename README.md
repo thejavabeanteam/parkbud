@@ -3,7 +3,7 @@
 ### Tinder for Parking at Cal Poly Pomona!
 
 ## Created By:
-|                   |            |
+| Name              | Role        |
 | ------------------|-------------
 | Chau Hyunh        | UI/UX Engineer (React)  
 | Elshaday Assefa   | Database Administrator (ORM)       
