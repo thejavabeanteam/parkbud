@@ -1,6 +1,4 @@
 import axios from 'axios';
-//import { fetchPetById, removeUnmatchedPets } from './';
-
 
 // ACTION TYPES
 const GET_MATCHES = 'GET_MATCHES';
@@ -27,7 +25,7 @@ const fetchOneUserById = (user) => ({
 
 const removedUnmatchData = () => ({
     type: REMOVE_UNMATCHES
-})
+});
 
 
 // THUNK CREATORS
@@ -40,15 +38,15 @@ export const fetchMatches = userId =>
             .catch(err => console.log(err));
 
 
-const markContacted = (user) => {
-    axios.put(`/api/match/${user.id}`)
-}
+const markContacted = (user, match) => {
+    axios.put(`/api/match/${user.id}`, {"matchId": match.id})
+};
 
 export const sendEmail = (user) => {
-    markContacted(user)
+    markContacted(user);
     axios.get(`/api/contact?userEmail=${user.email}&userPhoneNumber=${user.phoneNumber}&userZipCode=${user.zipCode}`)
         .catch(err => console.log(err));
-}
+};
 
 export const userWasSeen = (userId) =>
     (dispatch) => {
@@ -75,7 +73,7 @@ export const unMatch = (userId) =>
     dispatch =>
         axios.delete('/api/match', {data:{userId: userId}})
             .then((res) => {
-                dispatch(removeUnmatchedUser())
+                dispatch(removeUnmatchedUser());
                 dispatch(fetchMatches(userId))
             })
             .catch(err => console.log(err));

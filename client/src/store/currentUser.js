@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 // ACTION TYPES
 // declare the action types here
 const GET_USER = 'GET_USER';
@@ -33,9 +32,9 @@ export const me = () =>
                 dispatch(getUser(res.data || defaultUser)))
             .catch(err => console.log(err));
 
-export const auth = (email, password, method) =>
+export const auth = (email, password) =>
     dispatch =>
-        axios.post(`/auth/${method}`, {
+        axios.post(`/auth/login`, {
             email,
             password
         })
@@ -71,10 +70,9 @@ export const updateUser = (userId, updateInfo) => (dispatch) => {
 
 export const deleteAccount = userId => (dispatch) => {
     dispatch(logOutUser());
-    axios.delete(`/api/userAccount/${userId}`)
+    axios.delete(`/api/user/${userId}`)
         .catch(err => console.log(err));
 };
-
 
 // REDUCER
 // reduce the currentUser object
