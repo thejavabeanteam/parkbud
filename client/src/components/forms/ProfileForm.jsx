@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import _ from 'lodash';
 import { updateUser, addItem, clearForm } from '../../store';
 import { PersonalInfo } from './PersonalInfo';
-import { parkingLotPreferences } from './parkingLotPreferences';
+import { parkingLotPreferences } from './ParkingLotPreferences';
 
 
 // COMPONENT

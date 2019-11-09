@@ -13,12 +13,21 @@ import {
     composeWithDevTools
 } from 'redux-devtools-extension';
 import currentUser from './currentUser';
-// import the rest of the redux store
+import profile from './profile';
+import matches from './matches';
+import buds from './buds';
+import form from './form';
+
 
 // reduce all of the stores
 const reducer = combineReducers({
     currentUser,
+    profile,
+    matches,
+    buds,
+    form
 });
+
 const middleware = composeWithDevTools(applyMiddleware(
     thunkMiddleware,
     createLogger({
@@ -40,6 +49,10 @@ const store = createStore(rootReducer, persistedState, middleware);
 store.subscribe(() => localStorage.setItem('store', JSON.stringify(store.getState())));
 
 
-export * from './currentUser';
 // export the rest of the reduced redux stores
+export * from './currentUser';
+export * from './profile';
+export * from './matches';
+export * from './buds';
+export * from './form';
 export default store;

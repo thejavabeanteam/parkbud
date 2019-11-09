@@ -24,7 +24,7 @@ router.get('/:userId', (req, res, next) => {
 });
 
 //update a user's profile
-router.post('/:userId', (req, res, next) => {
+router.put('/:userId', (req, res, next) => {
     User.findByPk(req.params.userId)
         .then(user => {
             if (!user) {

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Cards, {Card} from 'react-swipe-card';
 import {connect} from 'react-redux';
 import {fetchMatches, addMatches, fetchAllBuds, rejectBud} from '../store';
-import SingleBud from './SingleBud';
 import FontAwesome from "react-fontawesome";
 
 const CustomAlertLeft = () => (

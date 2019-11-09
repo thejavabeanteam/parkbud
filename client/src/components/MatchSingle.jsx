@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import EmailPreview from './EmailPreview';
-import {clearMatchView, getMatchByMatchId, sendEmail, unMatch} from '../store';
+import {clearMatchView, getSingleMatch, sendEmail, unMatch} from '../store';
 import UserHome from "./user-home";
 
 // COMPONENT
@@ -57,7 +57,7 @@ const mapState = state => ({
 
 const mapDispatch = (dispatch, ownProps) => ({
     onLoad(currentUser, matchId) {
-        dispatch(getMatchByMatchId(currentUser.id, matchId));
+        dispatch(getSingleMatch(currentUser.id, matchId));
     },
     onClick(currentUser, match) {
         sendEmail(currentUser, match);
