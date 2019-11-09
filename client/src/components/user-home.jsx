@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link, NavLink} from 'react-router-dom';
-import {getUserProfile, deleteAccount, clearrofileView} from '../store';
+import {getUserProfile, deleteAccount, clearProfileView} from '../store';
 
 // COMPONENT
 class UserHome extends Component {
