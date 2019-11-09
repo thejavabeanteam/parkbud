@@ -1,24 +1,46 @@
 const router = require('express').Router();
-const {Seen} = require('../db/models');
+const {Seen, User} = require('../db/models');
 module.exports = router;
 
 // Get all Seens belonging to the logged-in user
 // requires the user to be logged in so the currentUser's id can be passed to req.body for post
-router.get('/:currentId', (req, res, next) => {
+router.get('/:userId', (req, res, next) => {
     Seen.findAll({
         where: {
-            currentId: req.params.currentId}
+            currentId: req.params.userId
+        }
     })
-        .then(seens => res.json(seens))
+        .then(seens => seens.map(seen => {
+            if (!seens) {
+                res.status(401).send('Invalid user id provided')
+            } else {
+
+                User.findAll({
+                    where: {
+                        id: seen.matchId
+                    }
+                })
+                    .then(profiles => {
+                        res.json(profiles);
+                        res.status(200).json(seens);
+                    })
+            }
+        }))
         .catch(next)
 });
 
 // Add a Seen to a logged-in user
-router.post('/', (req, res, next) => {
+router.post('/:userId', (req, res, next) => {
     Seen.create({
-        currentId: req.body.currentId,
+        currentId: req.params.userId,
         matchId: req.body.matchId
     })
-        .then(seen => res.json(seen.data))
-        .catch(err => console.log(err))
+        .then(seen => {
+            if (!seen) {
+                res.status(401).send('Invalid user id provided')
+            } else {
+                res.status(200).json(seen)
+            }
+        })
+        .catch(next)
 });
