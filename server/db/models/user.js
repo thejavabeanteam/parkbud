@@ -3,6 +3,9 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const User = db.define('user', {
+    name: {
+        type: Sequelize.STRING
+    },
     email: {
         type: Sequelize.STRING,
         unique: true,
@@ -18,9 +21,6 @@ const User = db.define('user', {
     accountType: {
         type: Sequelize.ENUM('student', 'faculty')
     },
-    salt: {
-        type: Sequelize.STRING
-    },
     parkingPreferences: {
         type: Sequelize.ARRAY(Sequelize.STRING),
         defaultValue: []
@@ -28,6 +28,9 @@ const User = db.define('user', {
     phoneNumber: {
         type: Sequelize.STRING,
         defaultValue: ''
+    },
+    salt: {
+        type: Sequelize.STRING
     }
 });
 

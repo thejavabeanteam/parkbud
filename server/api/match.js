@@ -11,56 +11,59 @@ router.get('/:userId', (req, res, next) => {
             currentId: req.params.userId
         }
     })
-        .then(matches => matches.map( match =>
-            User.findAll({
-                where: {
-                    id: match.matchId
-                }
-            })
-                .then(profiles => res.json(profiles))
-        ))
+        .then(matches => matches.map(match => {
+            if (!matches) {
+                res.status(401).send('Invalid user id provided')
+            } else {
+
+                User.findAll({
+                    where: {
+                        id: match.matchId
+                    }
+                })
+                    .then(profiles => {
+                        res.json(profiles);
+                        res.status(200).json(match);
+                    })
+            }
+        }))
         .catch(next)
 });
 
 //Add a match to the logged-in user
-router.post('/', (req, res, next) => {
+router.post('/:userId', (req, res, next) => {
     Match.findOrCreate({
         where: {
-            currentId: req.body.currentId,
+            currentId: req.params.userId,
             matchId: req.body.matchId
         }
-    }).then(Match.findOrCreate({
-        where: {
-            currentId: req.body.matchId,
-            matchId: req.body.currentId
-        }
-    }))
-        .then((newMatch) => res.json(newMatch[0]))
+    })
+        .then(newMatch => res.status(200).json(newMatch))
         .catch(err => console.log(err))
 });
 
 // on Contact set the match.contacted to true
-router.put('/:currentId/:matchId', (req, res, next) => {
+router.put('/:userId', (req, res, next) => {
     Match.update({contacted: true}, {
         where: {
-            currentId: req.params.currentId,
-            matchId: req.params.matchId
+            currentId: req.params.userId,
+            matchId: req.body.matchId
         }
     })
-        .then(result => res.json(result))
+        .then(result => res.status(200).json(result))
 });
 
 // Delete a match
-router.delete('/', (req, res, next) => {
+router.delete('/:userId', (req, res, next) => {
     Match.destroy({
         where: {
-            currentId: req.body.currentId,
+            currentId: req.params.userId,
             matchId: req.body.matchId
         }
     }).then(Match.destroy({
         where: {
             currentId: req.body.matchId,
-            matchId: req.body.currentId
+            matchId: req.params.userId
         }
     }))
         .then(() => res.sendStatus(204))
