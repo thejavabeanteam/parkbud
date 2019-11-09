@@ -1,4 +1,5 @@
 import axios from 'axios';
+import fetchProfileById from './profile'
 
 // ACTION TYPES
 const GET_MATCHES = 'GET_MATCHES';
@@ -39,7 +40,7 @@ export const fetchMatches = userId =>
 
 
 const markContacted = (user, match) => {
-    axios.put(`/api/match/${user.id}`, {"matchId": match.id})
+    axios.put(`/api/match/${user.id}`, {matchId: match.id})
 };
 
 export const sendEmail = (user) => {
@@ -78,12 +79,9 @@ export const unMatch = (userId) =>
             })
             .catch(err => console.log(err));
 
-export const fetchUserById = (petId) =>
+export const fetchUserById = (id) =>
     dispatch => {
-        axios.get(`/api/user/findById/${userId}`)
-            .then((res) => {
-                dispatch(fetchOneUserById(res.data));
-            })
+        fetchProfileById(id)
             .catch(err => console.log(err));
     };
 
