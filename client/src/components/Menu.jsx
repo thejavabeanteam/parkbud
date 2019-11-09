@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-// install the logout redux store
+import { logout } from '../store';
 import 'react-tippy/dist/tippy.css';
 import { Tooltip } from 'react-tippy';
 
@@ -37,7 +37,7 @@ export class Menu extends React.Component {
     }
 
     render() {
-        const { isLoggedIn } = this.props;
+        const { isLoggedIn, currentUser } = this.props;
         const { menuOpen } = this.state;
         return (
             <div>
@@ -50,7 +50,63 @@ export class Menu extends React.Component {
                             <span className="lines line-3" />
                         </label>
 
-                    {/* Include links to the other components once they've been created */}
+                        <Link
+                            to={ '/user/' + currentUser.id }
+                            onClick={this.handleOutsideClick}
+                            className="menu-item item-1"
+                        >
+                            <Tooltip
+                                title="User Account"
+                                position="left"
+                                trigger="mouseenter"
+                                delay="100"
+                            >
+                                <FontAwesome name="user" />
+                            </Tooltip>
+                        </Link>
+                        <Link
+                            to="/matches"
+                            onClick={this.handleOutsideClick}
+                            className="menu-item item-2"
+                        >
+                            <Tooltip
+                                title="Matches"
+                                position="left"
+                                trigger="mouseenter"
+                                delay="100"
+                            >
+                                <FontAwesome name="heart" />
+                            </Tooltip>
+                        </Link>
+                        <Link
+                            to={ '/buds/' + currentUser.id }
+                            onClick={this.handleOutsideClick}
+                            className="menu-item item-3"
+                        >
+                            <Tooltip
+                                title="View Buds"
+                                position="left"
+                                trigger="mouseenter"
+                                delay="100"
+                            >
+                                <FontAwesome name="paw" />
+                            </Tooltip>
+                        </Link>
+                        <Link
+                            to="/logout"
+                            onClick={this.handleLogout}
+                            className="menu-item item-4"
+                        >
+                            <Tooltip
+                                title="Logout"
+                                position="top"
+                                trigger="mouseenter"
+                                delay="100"
+                                distance="20"
+                            >
+                                <FontAwesome name="sign-out" />
+                            </Tooltip>
+                        </Link>
                     </nav>
                     : null
                 }
@@ -66,7 +122,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
     handleClick() {
-        // dispatch(logout()); once the logout function has been created
+        dispatch(logout()); //once the logout function has been created
     },
 });
 

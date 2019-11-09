@@ -2,25 +2,35 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import EmailPreview from './EmailPreview';
-import { sendEmail, unMatch } from '../store';
-import SingleSpot from './SingleSpot';
+import {clearMatchView, getMatchByMatchId, sendEmail, unMatch} from '../store';
+import UserHome from "./user-home";
 
+// COMPONENT
 class MatchSingle extends Component {
+    componentDidMount() {
+        // populate state.thisMatch
+        this.props.onLoad(this.props.currentUser, this.props.match.params.matchId);
+    }
+
+    componentWillUnmount() {
+        // refresh query
+        const currentMatch = this.props.match.params.matchId;
+        this.props.onDismount(currentMatch);
+    }
     render() {
-        const searchSpot = this.props.match.params.userId;
-        const spotDetail = this.props.matchSpots.filter(matchSpot => { if (matchSpot.id !== undefined) return matchSpot.id.$t === searchSpot })[0];
-        const contacted = this.props.matches.filter(match => match.userId === Number(searchSpot))[0].contacted
+        const {thisMatch} = this.props;
+        const contacted = thisMatch.contacted;
         return (
             <div className="flex">
                 <div id="singleMatchContainer">
-                    {this.props.matchSpots.length ? (
+                    {thisMatch ? (
                         <div>
                             <button
                                 className="unmatch largeIconLeft"
                                 onClick={(event) => {
                                     event.preventDefault();
                                     this.props.onUnmatch(
-                                        spotDetail,
+                                        thisMatch,
                                         this.props.currentUser.id,
                                     );
                                 }}
@@ -28,8 +38,8 @@ class MatchSingle extends Component {
                                 <FontAwesome name="heart" />
                                 <FontAwesome name="remove" />
                             </button>
-                            <EmailPreview currentUser={this.props.currentUser} user={spotDetail} name={'matchSingle'} contacted={contacted} />
-                            <SingleSpot user={spotDetail} />
+                            <EmailPreview currentUser={this.props.currentUser} user={thisMatch} name={'matchSingle'} contacted={contacted} />
+                            <UserHome userId={thisMatch.id} isReadOnly={true} />
                         </div>
                     ) : (
                         <p>Loading</p>
@@ -42,19 +52,24 @@ class MatchSingle extends Component {
 
 const mapState = state => ({
     currentUser: state.currentUser,
-    matchSpots: state.matchSpots,
-    matches: state.matches
+    thisMatch: state.thisMatch
 });
 
 const mapDispatch = (dispatch, ownProps) => ({
-    onClick(currentUser, user) {
-        sendEmail(currentUser, user);
+    onLoad(currentUser, matchId) {
+        dispatch(getMatchByMatchId(currentUser.id, matchId));
     },
-    onUnmatch(user, currentUserId) {
-        if (window.confirm(`Are you sure you want to delete your match with ${user.name.$t}?`))
-            dispatch(unMatch(user.id.$t, currentUserId));
+    onClick(currentUser, match) {
+        sendEmail(currentUser, match);
+    },
+    onUnmatch(match, currentUserId) {
+        if (window.confirm(`Are you sure you want to delete your match with ${match.name}?`))
+            dispatch(unMatch(match.id, currentUserId));
         ownProps.history.push('/matches');
     },
+    onDismount(matchId) {
+        dispatch(clearMatchView(matchId));
+    }
 });
 
 export default connect(mapState, mapDispatch)(MatchSingle);

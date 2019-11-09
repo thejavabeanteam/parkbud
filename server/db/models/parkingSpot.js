@@ -13,7 +13,10 @@ const ParkingSpot = db.define('parkingSpot', {
         type: Sequelize.STRING
     },
     pindrop: {
-        type: Sequelize.STRING // GOOGLE MAPS PLUS CODE!
+        type: Sequelize.STRING
+        // example: /api/user/vehicle/spot/354C%253%20Walnut,%20California
+        // where '354C%253%20Walnut,%20California' is the google maps plus code '354C+53% Walnut, California'
+        // perhaps we can have a pindrop feature on the client side and automatically grab the address from here
     },
 
 });

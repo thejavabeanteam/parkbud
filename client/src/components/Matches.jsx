@@ -12,7 +12,7 @@ class Matches extends Component {
                 <div className="matchesList">
                     {this.props.matches.length ?
                         this.props.matches.map(match => {
-                            const contacted = match.id && match.contacted
+                            const contacted = match.id && match.contacted;
                             return (
                                 match.id &&
                                 <div key={match.id} className="matches userCard">
@@ -66,7 +66,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
     onUnmatch(match, currentUserId) {
-        if (window.confirm(`Are you sure you want to delete your match with ${match.email}?`))
+        if (window.confirm(`Are you sure you want to delete your match with ${match.name}?`))
             dispatch(unMatch(match.id, currentUserId));
     },
     onClick(currentUser, match) {

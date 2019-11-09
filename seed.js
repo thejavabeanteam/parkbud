@@ -6,6 +6,7 @@ const {User, Day, Vehicle, ParkingSpot} = require("./server/db/models");
 const users = [
     {
         "userId": 1,
+        "name": "Billy Bronco",
         "email": "bbronco@cpp.edu",
         "password": "billy",
         "gender": "male",
@@ -16,6 +17,7 @@ const users = [
     },
     {
         "userId": 2,
+        "name": "William Kellogg",
         "email": "wkellogg@cpp.edu",
         "password": "william",
         "gender": "male",
@@ -59,7 +61,6 @@ const days = [
 
 const vehicles = [
     {
-        "vehicleId": 1,
         "ownerId": 1,
         "color": "black",
         "model": "ford",
@@ -67,7 +68,6 @@ const vehicles = [
         "year": 2012
     },
     {
-        "vehicleId": 2,
         "ownerId": 2,
         "color": "red",
         "model": "mazda",
@@ -78,10 +78,10 @@ const vehicles = [
 
 const parkingSpots = [
     {
-        "vehicleId": 1,
+        "ownerId": 1,
         "parkingLot": "Lot M",
         "school": "Cal Poly Pomona",
-        "pindrop": "354C+53 Walnut, California"
+        "pindrop": "/api/user/vehicle/spot/?pindrop=354C%253%20Walnut,%20California"
     }];
 
 const seed = async () => {

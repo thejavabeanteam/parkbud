@@ -102,8 +102,8 @@ const mapDispatch = dispatch => ({
     },
     handleSubmit(userId, formState, name, history) {
         const redirect = name === 'createProfile'
-            ? '/spots'
-            : '/home';
+            ? '/buds/' + userId
+            : '/users/' + userId;
         Promise.resolve(dispatch(updateUser(userId, formState)))
             .then(() => {
                 dispatch(clearForm());

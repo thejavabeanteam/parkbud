@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import { withRouter } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
-import { sendEmail, fetchMatches, removeUnmatchedSpots } from '../store';
+import { sendEmail, fetchMatches, removeUnmatchedBuds, clearProfileView, getUserProfile} from '../store';
 
 
 const customStyles = {
@@ -45,16 +45,21 @@ export class EmailPreview extends React.Component {
         this.setState({ modalIsOpen: false });
     }
 
-    onSend(currentUser, user) {
-        sendEmail(currentUser, user);
+    onSend(currentUser, match) {
+        sendEmail(currentUser, match);
         this.closeModal();
         this.props.resetMatches(currentUser);
         this.props.history.push('/matches');
     }
 
+    componentDidMount() {
+        // populate state.thisMatch
+        this.props.onLoad(this.props.matchId);
+    }
+
     render() {
         const {
-            currentUser, user, name, contacted,
+            currentUser, user: match, name, contacted,
         } = this.props;
         const buttonClass = (name === 'matches') ? 'emailEnvelope smallIcon' : 'emailEnvelope largeIconRight';
         const wasContacted = contacted ? 'check' : 'envelope-o';
@@ -69,7 +74,7 @@ export class EmailPreview extends React.Component {
                     contentLabel="Example Modal"
                 >
                     <div id="email">
-                        <div className="email-header">To: {user.contact.email.$t}
+                        <div className="email-header">To: {match.email}
                             <br />Subject: Requesting for a switch of your parking spot.
                         </div>
                         <div>
@@ -91,9 +96,6 @@ export class EmailPreview extends React.Component {
                                 <strong>Phone Number: </strong>{currentUser.phoneNumber}
                             </div>
                             <div className="email-details">
-                                <strong>Location: </strong>{currentUser.zipCode}
-                            </div>
-                            <div className="email-details">
                                 <strong>Vehicle: </strong>{currentUser.vehicle}
                             </div>
                             <div>
@@ -104,7 +106,7 @@ export class EmailPreview extends React.Component {
                                 <div className="email-signature">The ParkBud Team</div>
                             </div>
                             <button className="email-button" id="cancel" type="button" onClick={this.closeModal}>Cancel</button>
-                            <button className="email-button" type="button" onClick={() => this.onSend(currentUser, user)}>Yes! Send it!</button>
+                            <button className="email-button" type="button" onClick={() => this.onSend(currentUser, match)}>Yes! Send it!</button>
                         </div>
                     </div>
                 </Modal>
@@ -115,11 +117,22 @@ export class EmailPreview extends React.Component {
 }
 
 // CONTAINER
+const mapState = state => ({
+    user: state.profile
+});
+
+
 const mapDispatch = dispatch => ({
+    onLoad(id) {
+        dispatch(getUserProfile(id));
+    },
     resetMatches(currentUser) {
-        dispatch(removeUnmatchedSpots());
+        dispatch(removeUnmatchedBuds());
         dispatch(fetchMatches(currentUser.id));
     },
+    onDismount(id) {
+        dispatch(clearProfileView(id));
+    }
 });
 
 export default withRouter(connect(null, mapDispatch)(EmailPreview));

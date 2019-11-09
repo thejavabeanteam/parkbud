@@ -1,5 +1,10 @@
 const router = require('express').Router();
+const axios = require('axios');
 const {User, Day, Vehicle, ParkingSpot} = require('../db/models');
+
+const {
+  GOOGLE_GEO_API_KEY
+} = require('../../secrets');
 
 module.exports = router;
 
@@ -174,6 +179,17 @@ router.get('/vehicle/spot/:userId', (req, res, next) => {
         })
             .then(spot => res.json(spot)))
         .catch(err => console.log(err))
+});
+
+//get the google maps view of the given pindrop
+router.get('/vehicle/spot/', (req, res, next) => {
+    const pindrop = req.query.pindrop;
+    const targetUrl = "https://plus.codes/api?encryptkey=" + GOOGLE_GEO_API_KEY +  "&address=" + pindrop;
+
+    axios.get(targetUrl).then(payload => {
+        let pindropLink = "https://plus.codes/" + payload.data.plus_code.global_code
+    })
+
 });
 
 //add an occupied spot

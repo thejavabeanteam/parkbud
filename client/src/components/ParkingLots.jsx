@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CurrentLocation from './CurrentLocation';
 
 const ParkingLots = () => (
     <div className="container">
@@ -136,7 +135,6 @@ const ParkingLots = () => (
                 </Link>
             </div>
         </div>
-        <CurrentLocation />
     </div>
 );
 
