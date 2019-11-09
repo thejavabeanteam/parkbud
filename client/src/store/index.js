@@ -13,16 +13,18 @@ import {
     composeWithDevTools
 } from 'redux-devtools-extension';
 import currentUser from './currentUser';
-import currentLocation from './currentLocation';
+import profile from './profile';
 import matches from './matches';
+import buds from './buds';
 import form from './form';
 
 
 // reduce all of the stores
 const reducer = combineReducers({
     currentUser,
-    currentLocation,
+    profile,
     matches,
+    buds,
     form
 });
 
@@ -49,7 +51,8 @@ store.subscribe(() => localStorage.setItem('store', JSON.stringify(store.getStat
 
 // export the rest of the reduced redux stores
 export * from './currentUser';
-export * from './currentLocation';
+export * from './profile';
 export * from './matches';
+export * from './buds';
 export * from './form';
 export default store;

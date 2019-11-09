@@ -5,30 +5,30 @@ const CLEAR_FORM = 'CLEAR_FORM';
 
 //ACTION CREATORS
 export const addItem = (key, value) => {
-    let val = { type: ADD_ITEM, key, value }
+    let val = { type: ADD_ITEM, key, value };
     return val
-}
+};
 
 export const clearForm = () => {
-    let val = {type: CLEAR_FORM}
+    let val = {type: CLEAR_FORM};
     return val
-}
+};
 
 
 //THUNKS
 
 
-//DEFAULTSTATE
-const defaultState = {}
+//DEFAULT STATE
+const defaultState = {};
 
 //REDUCER
 export default function (state = defaultState, action) {
-    const {key, value, type} = action
+    const {key, value, type} = action;
     switch (type) {
         case ADD_ITEM:
-            return Object.assign({}, state, { [key]: value })
+            return Object.assign({}, state, { [key]: value });
         case CLEAR_FORM:
-            return defaultState
+            return defaultState;
         default:
             return state
     }
