@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link, NavLink} from 'react-router-dom';
-import {getUserProfile, deleteAccount, clearProfileView} from '../store';
+import {getUserProfile, getUserSchedule, getUserSpot, getUserVehicle, deleteAccount, clearProfileView, getUserVehicle, getUserSpot} from '../store';
 
 // COMPONENT
 class UserHome extends Component {
-    // populate this/profile
+    // populate this.profile
     componentDidMount() {
-        this.props.onLoad(this.props.match.params.userId);
+        this.props.onLoad(this.props.userId);
     }
 
     componentWillUnmount() {
@@ -84,7 +84,11 @@ class UserHome extends Component {
                     </div>
                     <div>
                         <h4>Name:</h4>
-                        <p>{user.schedule}</p>
+                        {!schedule
+                            ? <p>No Parking Schedule Given</p>
+                            : <ul>{schedule.map((day) =>
+                                <li>{day.dayOfWeek}: <br/>Arrival: {day.arrival} <br/>Departure: {day.departure}</li>)}
+                            </ul>}
                     </div>
                     <div>
                         <h4>Message:</h4>
@@ -119,6 +123,9 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
     onLoad(id) {
         dispatch(getUserProfile(id));
+        dispatch(getUserVehicle(id));
+        dispatch(getUserSchedule(id));
+        dispatch(getUserSpot(id));
     },
     deleteUser(event, user) {
         event.preventDefault();

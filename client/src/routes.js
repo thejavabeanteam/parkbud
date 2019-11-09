@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import the redux components once they've been created
-// import the App component
-// import the "me" object from the user store
+import { Login, UserHome, AllBuds, CreateProfile, UpdateProfile, ParkingLots, Matches, MatchSingle, EmailPreview  } from './components';
+import App from './App';
+import { me } from './store';
 
 /**
  * COMPONENT
@@ -15,11 +15,34 @@ class Routes extends Component {
     }
 
     render() {
-        const { isLoggedIn } = this.props;
+    const { isLoggedIn, currentUser } = this.props;
 
         return (
             <Router>
-
+        <App>
+          <Switch>
+            <Route exact path="/" render={() => ( isLoggedIn ? ( <Redirect to="/buds" />) : (
+                <Login />
+              )
+            )}
+            />
+            <Route exact path="/login" component={Login} />
+            <Route path="/createProfile" component={CreateProfile} />
+            {
+              isLoggedIn &&
+                <Switch>
+                  <Route path="/users" render={(props) => <UserHome {...props} userId={currentUser.id} />} />
+                  <Route path="/updateProfile" component={UpdateProfile} />
+                  <Route exact path="/buds" render={(props) => <AllBuds {...props} userId={currentUser.id} />} />
+                  <Route exact path="/matches" render={(props) => <Matches {...props} userId={currentUser.id} />} />
+                  <Route exact path="/matches/:matchId" render={(props) => <MatchSingle {...props} userId={currentUser.id} />} />
+                  <Route path="/emailPreview" component={EmailPreview} />
+                </Switch>
+            }
+            {/* Displays our Login component as a fallback */}
+            <Route component={Login} />
+          </Switch>
+        </App>
             </Router>
         );
     }

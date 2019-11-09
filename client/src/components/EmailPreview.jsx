@@ -135,4 +135,4 @@ const mapDispatch = dispatch => ({
     }
 });
 
-export default withRouter(connect(null, mapDispatch)(EmailPreview));
+export default withRouter(connect(mapState(), mapDispatch)(EmailPreview));
