@@ -3,6 +3,7 @@ import Cards, {Card} from 'react-swipe-card';
 import {connect} from 'react-redux';
 import {fetchMatches, addMatches, fetchAllBuds, rejectBud} from '../store';
 import FontAwesome from "react-fontawesome";
+import UserHome from "./user-home";
 
 const CustomAlertLeft = () => (
     <span>
@@ -40,7 +41,7 @@ class AllBuds extends Component {
                                     onLove(bud.id, currentUser.id);
                                 }}
                             >
-                                <SingleBud bud={bud} expand={false}/>
+                                <UserHome userId={bud.id}/>
                             </Card>
                         )
                     })}

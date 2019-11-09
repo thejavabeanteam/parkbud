@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link, NavLink} from 'react-router-dom';
-import {getUserProfile, getUserSchedule, getUserSpot, getUserVehicle, deleteAccount, clearProfileView, getUserVehicle, getUserSpot} from '../store';
+import {getUserProfile, getUserSchedule, deleteAccount, clearProfileView, getUserVehicle, getUserSpot} from '../store';
 
 // COMPONENT
 class UserHome extends Component {
@@ -69,7 +69,7 @@ class UserHome extends Component {
                         {!spot.length
                             ? <p>None</p>
                             : (
-                                <a href={spot.pindrop}>spot.parkingLot</>
+                                <a href={spot.pindrop}>spot.parkingLot</a>
                             )
                         }
                     </div>

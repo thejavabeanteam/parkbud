@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
 import { sendEmail, unMatch } from '../store';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { EmailPreview } from './';
 

@@ -15,7 +15,7 @@ const fetchProfileById = (user) => ({
 
 const fetchUserVehicle = (vehicle) => ({
     type: GET_USER_VEHICLE,
-    schedule
+    vehicle
 });
 
 const fetchUserSchedule = (schedule) => ({
@@ -25,7 +25,7 @@ const fetchUserSchedule = (schedule) => ({
 
 const fetchUserSpot = (spot) => ({
     type: GET_USER_SPOT,
-    schedule
+    spot
 });
 
 export const clearProfileView = (user) => ({

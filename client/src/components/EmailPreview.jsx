@@ -118,7 +118,7 @@ export class EmailPreview extends React.Component {
 
 // CONTAINER
 const mapState = state => ({
-    user: state.profile
+    user: state.user
 });
 
 
@@ -135,4 +135,4 @@ const mapDispatch = dispatch => ({
     }
 });
 
-export default withRouter(connect(mapState(), mapDispatch)(EmailPreview));
+export default withRouter(connect(mapState, mapDispatch)(EmailPreview));
