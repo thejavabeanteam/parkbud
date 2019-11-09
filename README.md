@@ -3,7 +3,7 @@
 ### Tinder for Parking at Cal Poly Pomona!
 
 ## Created By:
-|                   |            |
+| Name              | Role        |
 | ------------------|-------------
 | Chau Hyunh        | UI/UX Engineer (React)  
 | Elshaday Assefa   | Database Administrator (ORM)       
@@ -17,4 +17,6 @@
 * [boilermaker](https://github.com/FullstackAcademy/boilermaker)
 * [Whiskr](https://github.com/Whiskr/whiskr)
 
-Demo of wireframe link: https://marvelapp.com/4gi5729
+Demo of the wireframe link: https://marvelapp.com/4gi5729
+
+[API Docs](http://cs480-projects.github.io/teams-fall2019/TheJavaBeanTeam/api.html)
