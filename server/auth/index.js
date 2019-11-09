@@ -1,9 +1,6 @@
 const router = require('express').Router();
-// import User model once created
-const User = require('../db/');
-
+const User = require('../db/models/user');
 module.exports = router;
-
 
 
 // add routing for /login
@@ -20,7 +17,7 @@ router.post('/login', (req, res, next) => {
             }
         })
         .catch(next)
-})
+});
 
 // add routing for /signup
 router.post('/signup', (req, res, next) => {
@@ -35,21 +32,17 @@ router.post('/signup', (req, res, next) => {
                 next(err)
             }
         })
-})
+});
 
 
 // add routing for /logout
 router.post('/logout', (req, res) => {
-    req.logout()
+    req.logout();
     res.redirect('/')
-})
+});
 
 
 // add routing for /me
 router.get('/me', (req, res) => {
     res.json(req.user)
-})
-
-router.use('/google', require('./google'))
-router.use('/facebook', require('./facebook'));
-
+});
