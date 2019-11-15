@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-// import logout store
-// import the Menu component
 import { logout } from './store';
 import Menu from './components/Menu';
 
