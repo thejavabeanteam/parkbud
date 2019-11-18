@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import FontAwesome from 'react-fontawesome';
-import { sendEmail, unMatch } from '../store';
+import { fetchMatches, unMatch} from '../store';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { EmailPreview } from './';
 
 class Matches extends Component {
+    componentDidMount() {
+        this.props.onLoad(this.props.currentUser.id);
+    }
+
     render() {
         return (
             <div>
@@ -13,20 +16,14 @@ class Matches extends Component {
                 <div className="matchesList">
                     {this.props.matches.length ?
                         this.props.matches.map(match => {
-                            const contacted = match.id && match.contacted;
                             return (
                                 match.id &&
-                                <div key={match.id} className="matches userCard">
+                                <div key={match.id} className="matches petCard">
                                     <Link to={`matches/${match.id}`}>
                                         <img
-                                            src={
-                                                // eventually add the ability for user to upload profile pics
-                                                // match.media.photos
-                                                //     ? match.media.photos.photo[3]
-                                                //     :
-                                                    'http://biorem.org/wp-content/uploads/2016/07/not-available.png'}
-                                            className="spotPic rounded"
-                                            alt="spot profile pic"
+                                            src={'https://cdn.shopify.com/s/files/1/1061/1924/products/Happy_Emoji_Icon_5c9b7b25-b215-4457-922d-fef519a08b06.png'}
+                                            className="petPic rounded"
+                                            alt="pet profile pic"
                                         />
                                         <button
                                             className="unmatch smallIcon"
@@ -44,12 +41,10 @@ class Matches extends Component {
                                             }}
                                         > <FontAwesome name="envelope-o" />
                                         </button>
-                                        <div id="budInfo">
+                                        <div id="petInfo">
                                             <h1>{match.name}</h1>
-                                            <h2>{match.email}</h2>
                                         </div>
                                     </Link>
-                                    <EmailPreview currentUser={this.props.currentUser} user={match} name="matches" contacted={contacted} />
                                 </div>
                             )})
                         : <p>NO MATCHES!</p>
@@ -66,12 +61,15 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
+    onLoad(id) {
+        dispatch(fetchMatches(id));
+    },
     onUnmatch(match, currentUserId) {
         if (window.confirm(`Are you sure you want to delete your match with ${match.name}?`))
             dispatch(unMatch(match.id, currentUserId));
     },
     onClick(currentUser, match) {
-        sendEmail(currentUser, match);
+        // TODO: show phone number via alert/pop up
     },
 });
 

@@ -1,50 +1,56 @@
 import React, {Component} from 'react';
 import Cards, {Card} from 'react-swipe-card';
 import {connect} from 'react-redux';
-import {fetchMatches, addMatches, fetchAllBuds, rejectBud} from '../store';
-import FontAwesome from "react-fontawesome";
-import UserHome from "./user-home";
+import {
+    fetchMatches,
+    addMatch,
+    fetchAllBuds,
+    rejectBud,
+    clearBuds, unMatch
+} from '../store';
+import SingleBud from "./SingleBud";
+
+const qs = require('query-string');
 
 const CustomAlertLeft = () => (
     <span>
-        <FontAwesome name="remove"/>
+    <img alt="reject pet icon" src="../reject-icon.png" className="icon" />
   </span>);
 const CustomAlertRight = () => (
     <span>
-        <FontAwesome name="heart"/>
+    <img alt="accept pet icon" src="../favorite-icon.png" className="icon" />
   </span>);
 
 class AllBuds extends Component {
     componentDidMount() {
-        this.props.onLoad(this.props.currentUser);
+        this.props.onLoad(this.props.user, qs.parse(this.props.location.search));
+    }
+
+    componentWillUnmount() {
+        this.props.onDismount();
     }
 
     render() {
         const {buds, currentUser, onReject, onLove, onLoad} = this.props;
         return (
             <div className="container">
-                <div id="card-stack"/>
+                <div id="card-stack" />
                 <Cards
-                    alertRight={<CustomAlertRight/>}
-                    alertLeft={<CustomAlertLeft/>}
-                    onEnd={() => onLoad(currentUser)}
+                    alertRight={<CustomAlertRight />}
+                    alertLeft={<CustomAlertLeft />}
+                    onEnd={() => onLoad(currentUser, qs.parse(this.props.location.search))}
                     className="master-root"
                 >
-                    {buds && buds.map((bud) => {
-                        return (
-                            <Card
-                                key={bud.id}
-                                onSwipeLeft={() => {
-                                    onReject(bud.id, currentUser.id);
-                                }}
-                                onSwipeRight={() => {
-                                    onLove(bud.id, currentUser.id);
-                                }}
-                            >
-                                <UserHome userId={bud.id}/>
-                            </Card>
-                        )
-                    })}
+                        {buds && buds.map((bud) => {
+                            return (
+                                <Card className="card"
+                                    key={bud.id}
+                                    onSwipeLeft={() => { onReject(bud.id, currentUser.id); }}
+                                    onSwipeRight={() => { onLove(bud.id, currentUser.id); }}
+                                >
+                                    <SingleBud bud={bud} allBuds={true}/>
+                                </Card>
+                            )})}
                 </Cards>
             </div>
         );
@@ -52,15 +58,18 @@ class AllBuds extends Component {
 }
 
 const mapState = state => ({
-    buds: state.buds,
-    currentUser: state.currentUser,
+    buds: state.buds[0],
+    currentUser: state.currentUser
 });
 
 const mapDispatch = (dispatch, ownProps) => ({
-    onLoad(user) {
-        for (let i = 0; i < 25; i++) {
-            dispatch(fetchAllBuds(user));
-        }
+    onLoad(user, parsed) {
+        const prefs = {
+            "dayOfWeek": `${parsed.dayOfWeek}`,
+                "arrival": `${parsed.arrival}`,
+                "earliest": `${parsed.earliest}`
+        };
+        dispatch(fetchAllBuds(user.id, prefs, user.parkingPreferences));
     },
     loadMatches(id) {
         dispatch(fetchMatches(id));
@@ -69,7 +78,10 @@ const mapDispatch = (dispatch, ownProps) => ({
         dispatch(rejectBud(matchId, currentId));
     },
     onLove(matchId, currentId) {
-        dispatch(addMatches(matchId, currentId));
+        dispatch(addMatch(matchId, currentId));
+    },
+    onDismount() {
+        dispatch(clearBuds);
     }
 });
 

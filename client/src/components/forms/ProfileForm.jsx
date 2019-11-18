@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import _ from 'lodash';
-import { updateUser, addItem, clearForm } from '../../store';
-import { PersonalInfo } from './PersonalInfo';
-import { parkingLotPreferences } from './ParkingLotPreferences';
+import {addItem, clearForm, auth, updateUser} from '../../store';
+import {PersonalInfo} from './PersonalInfo';
+import {ScheduleForm} from './ScheduleForm';
 
 
 // COMPONENT
@@ -20,21 +20,20 @@ class ProfileForm extends React.Component {
     }
 
     assignValue(inputName) {
-        const { form, user } = this.props;
-        const value = (form[inputName] && form[inputName].length)
+        const {form, user} = this.props;
+        return (form[inputName] && form[inputName].length)
             ? form[inputName]
             : user[inputName];
-        return value;
     }
 
     nextPage(evt) {
         evt.preventDefault();
-        this.setState({ page: this.state.page + 1 });
+        this.setState({page: this.state.page + 1});
     }
 
     previousPage(evt) {
         evt.preventDefault();
-        this.setState({ page: this.state.page - 1 });
+        this.setState({page: this.state.page - 1});
     }
 
 
@@ -42,7 +41,7 @@ class ProfileForm extends React.Component {
         const {
             handleSubmit, handleChange, handleCheckbox, user, form, name, history, display
         } = this.props;
-        const { page, validation } = this.state;
+        const {page, validation} = this.state;
         return (
             <div className="splash">
                 <div className="form animated flipInX">
@@ -55,12 +54,24 @@ class ProfileForm extends React.Component {
                             user={user}
                             form={form}
                         />}
-                        {page === 2 && <parkingLotPreferences
+                        {page === 2 && <ScheduleForm
                             previousPage={this.previousPage}
                             nextPage={this.nextPage}
-                            onCheck={handleCheckbox}
+                            onChange={handleChange}
+                            defaultValue={this.assignValue}
+                            user={user}
                             form={form}
+                            submitForm={() => handleSubmit(user.id, form, name, history)}
                         />}
+                        {/*{page === 3 && <ProfileForm*/}
+                        {/*    previousPage={this.previousPage}*/}
+                        {/*    onChange={handleChange}*/}
+                        {/*    onCheck={handleCheckbox}*/}
+                        {/*    defaultValue={this.assignValue}*/}
+                        {/*    submitForm={() => handleSubmit(user.id, form, name, history)}*/}
+                        {/*    user={user}*/}
+                        {/*    form={form}*/}
+                        {/*/>}*/}
 
                     </div>
                 </div>
@@ -74,7 +85,7 @@ const mapCreateProfile = (state, ownProps) => ({
     user: state.currentUser,
     form: state.form,
     name: 'createProfile',
-    display: 'Please Create Your Profile to Better Help Us Match You With Your Spot',
+    display: 'Create a profile to get started!',
     history: ownProps.history,
 });
 
@@ -82,7 +93,7 @@ const mapUpdateProfile = (state, ownProps) => ({
     user: state.currentUser,
     form: state.form,
     name: 'updateProfile',
-    display: 'Update Your Preferences for Better Matching',
+    display: 'Update your profile',
     history: ownProps.history,
 });
 
@@ -101,15 +112,21 @@ const mapDispatch = dispatch => ({
         dispatch(addItem(key, array));
     },
     handleSubmit(userId, formState, name, history) {
-        const redirect = name === 'createProfile'
-            ? '/buds'
-            : `/api/users/${userId}`;
-        Promise.resolve(dispatch(updateUser(userId, formState)))
-            .then(() => {
-                dispatch(clearForm());
-                history.push(redirect);
-            })
-            .catch(err => console.log(err));
+        if (name === 'createProfile') {
+            Promise.resolve(dispatch(auth(formState.email, formState.password, "signup")))
+                .then(() => {
+                    dispatch(clearForm());
+                    history.push("/home");
+                })
+                .catch(err => console.log(err));
+        } else {
+            Promise.resolve(dispatch(updateUser(userId, formState)))
+                .then(() => {
+                    dispatch(clearForm());
+                    history.push("/user");
+                })
+                .catch(err => console.log(err));
+        }
     },
 });
 

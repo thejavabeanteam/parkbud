@@ -9,11 +9,7 @@ const Match = db.define('match', {
     matchId: {
         type: Sequelize.INTEGER,
         primaryKey: true
-    },
-    contacted: {
-        type: Sequelize.BOOLEAN
-    },
-
+    }
 });
 
 module.exports = Match;

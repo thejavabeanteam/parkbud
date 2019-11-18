@@ -32,9 +32,9 @@ export const me = () =>
                 dispatch(getUser(res.data || defaultUser)))
             .catch(err => console.log(err));
 
-export const auth = (email, password) =>
+export const auth = (email, password, method) =>
     dispatch =>
-        axios.post(`/auth/login`, {
+  axios.post(`/auth/${method}`, {
             email,
             password
         })
@@ -73,6 +73,69 @@ export const deleteAccount = userId => (dispatch) => {
     axios.delete(`/api/user/${userId}`)
         .catch(err => console.log(err));
 };
+
+export const createScheduleEntry = (userId, dayOfWeek, departure) =>
+    (dispatch) => {
+    axios.post(`api/user/schedule/day/${userId}`, {dayOfWeek: dayOfWeek, departure: departure})
+        .then((res) => {})
+        .catch(error => console.log(error));
+};
+
+export const updateScheduleEntry = (userId, dayOfWeek, departure) =>
+    (dispatch) => {
+    axios.put(`api/user/schedule/day/${userId}`, {dayOfWeek: dayOfWeek, departure: departure})
+        .then((res) => {})
+        .catch(error => console.log(error));
+    };
+
+export const removeScheduleEntry = (userId, dayOfWeek) =>
+    (dispatch) => {
+    axios.post(`api/user/schedule/day/delete/${userId}`, {dayOfWeek: dayOfWeek})
+        .then((res) => {})
+        .catch(error => console.log(error));
+    };
+
+export const addUserVehicle = (userId, vehicle) =>
+    (dispatch) => {
+    axios.post(`api/user/vehicle/${userId}`, {vehicle})
+        .then((res) => {})
+        .catch(error => console.log(error));
+};
+
+export const updateUserVehicle = (userId, updatedVehicle) =>
+    (dispatch) => {
+    axios.put(`api/user/vehicle/${userId}`, {updatedVehicle})
+        .then((res) => {})
+        .catch(error => console.log(error));
+    };
+
+export const removeUserVehicle = (userId) =>
+    (dispatch) => {
+    axios.post(`api/user/vehicle/${userId}`)
+        .then((res) => {})
+        .catch(error => console.log(error));
+    };
+
+export const addSpot = (userId, spot) =>
+    (dispatch) => {
+        axios.post(`api/user/vehicle/spot/${userId}`, {spot})
+            .then((res) => {})
+            .catch(error => console.log(error));
+    };
+
+export const updateSpot = (userId, updatedSpot) =>
+    (dispatch) => {
+        axios.put(`api/user/vehicle/spot/${userId}`, {updatedSpot})
+            .then((res) => {})
+            .catch(error => console.log(error));
+    };
+
+export const removeSpot = (userId) =>
+    (dispatch) => {
+        axios.post(`api/user/vehicle/spot/${userId}`)
+            .then((res) => {})
+            .catch(error => console.log(error));
+    };
 
 // REDUCER
 // reduce the currentUser object

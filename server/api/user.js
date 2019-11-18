@@ -12,7 +12,9 @@ module.exports = router;
 
 //get a single user
 router.get('/:userId', (req, res, next) => {
-    User.findByPk(req.params.userId)
+    User.findByPk(req.params.userId, {
+        include: [{model: Day}, {model: Vehicle}, {model: ParkingSpot}]
+    })
         .then(user => {
             if (!user) {
                 res.status(401).send('User not found')
@@ -90,9 +92,7 @@ router.post('/schedule/day/:userId', (req, res, next) => {
         where: {
             userId: req.params.userId,
             dayOfWeek: req.body.dayOfWeek,
-            arrival: req.body.arrival,
             departure: req.body.departure,
-            earliest: req.body.earliest
         }
     })
         .then(day => res.status(200).json(day))
@@ -115,7 +115,7 @@ router.put('/schedule/day/:userId', (req, res, next) => {
 });
 
 //delete an entry from the user's schedule
-router.delete('/schedule/day/:userId', (req, res, next) => {
+router.post('/schedule/day/delete/:userId', (req, res, next) => {
     Day.destroy({
         where: {
             userId: req.params.userId,
@@ -132,7 +132,7 @@ router.delete('/schedule/day/:userId', (req, res, next) => {
 router.get('/vehicle/:userId', (req, res, next) => {
     Vehicle.findOne({
         where: {
-            ownerId: req.params.userId
+            userId: req.params.userId
         }
     })
         .then(vehicle => {
@@ -149,7 +149,7 @@ router.get('/vehicle/:userId', (req, res, next) => {
 router.post('/vehicle/:userId', (req, res, next) => {
     Vehicle.findOrCreate({
         where: {
-            ownerId: req.params.userId,
+            userId: req.params.userId,
             color: req.body.color,
             model: req.body.model,
             make: req.body.make,
@@ -170,7 +170,7 @@ router.post('/vehicle/:userId', (req, res, next) => {
 router.put('/vehicle/:userId', (req, res, next) => {
     Vehicle.findOne({
         where: {
-            ownerId: req.params.userId
+            userId: req.params.userId
         }
     })
         .then(vehicle => {
@@ -190,7 +190,7 @@ router.put('/vehicle/:userId', (req, res, next) => {
 router.delete('/vehicle/:userId', (req, res, next) => {
     Vehicle.destroy({
         where: {
-            ownerId: req.params.userId,
+            userId: req.params.userId,
         }
     })
         .then(() => res.sendStatus(204))
@@ -203,12 +203,12 @@ router.delete('/vehicle/:userId', (req, res, next) => {
 router.get('/vehicle/spot/:userId', (req, res, next) => {
     Vehicle.findOne({
         where: {
-            ownerId: req.params.userId,
+            userId: req.params.userId,
         }
     })
         .then(vehicle => ParkingSpot.findOne({
             where: {
-                ownerId: vehicle.ownerId
+                userId: vehicle.userId
             }
         })
             .then(spot => {
@@ -229,7 +229,7 @@ router.get('/vehicle/spot/:userId', (req, res, next) => {
 router.post('/vehicle/spot/:userId', (req, res, next) => {
     ParkingSpot.findOrCreate({
         where: {
-            ownerId: req.params.userId,
+            userId: req.params.userId,
             parkingLot: req.body.parkingLot,
             school: req.body.school,
             pindrop: req.body.pindrop
@@ -243,12 +243,12 @@ router.post('/vehicle/spot/:userId', (req, res, next) => {
 router.put('/vehicle/spot/:userId', (req, res, next) => {
     Vehicle.findOne({
         where: {
-            ownerId: req.params.userId,
+            userId: req.params.userId,
         }
     })
         .then(vehicle => ParkingSpot.findOne({
             where: {
-                ownerId: vehicle.ownerId
+                userId: vehicle.userId
             }
         }).then(spot => {
             spot.update(req.body)
@@ -262,11 +262,11 @@ router.put('/vehicle/spot/:userId', (req, res, next) => {
 router.delete('/vehicle/spot/:userId', (req, res, next) => {
     Vehicle.findOne({
         where: {
-            ownerId: req.params.userId,
+            userId: req.params.userId,
         }
     }).then(vehicle => ParkingSpot.destroy({
         where: {
-            ownerId: vehicle.ownerId
+            userId: vehicle.userId
         }
     }).then(() => res.sendStatus(204)))
         .catch(next)

@@ -1,25 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
-import EmailPreview from './EmailPreview';
-import {clearMatchView, getSingleMatch, sendEmail, unMatch} from '../store';
-import UserHome from "./user-home";
+import {unMatch, fetchMatches} from '../store';
+import SingleBud from "./SingleBud";
 
 // COMPONENT
 class MatchSingle extends Component {
     componentDidMount() {
-        // populate state.thisMatch
-        this.props.onLoad(this.props.currentUser, this.props.match.params.matchId);
+        this.props.onLoad(this.props.userId);
     }
 
-    componentWillUnmount() {
-        // refresh query
-        const currentMatch = this.props.match.params.matchId;
-        this.props.onDismount(currentMatch);
-    }
     render() {
-        const {thisMatch} = this.props;
-        const contacted = thisMatch.contacted;
+        const {matches, currentUser} = this.props;
+        const thisMatch = matches.filter(match => match.id === Number(this.props.match.params.matchId))[0];
         return (
             <div className="flex">
                 <div id="singleMatchContainer">
@@ -31,15 +24,14 @@ class MatchSingle extends Component {
                                     event.preventDefault();
                                     this.props.onUnmatch(
                                         thisMatch,
-                                        this.props.currentUser.id,
+                                        currentUser.id,
                                     );
                                 }}
                             >
                                 <FontAwesome name="heart" />
                                 <FontAwesome name="remove" />
                             </button>
-                            <EmailPreview currentUser={this.props.currentUser} user={thisMatch} name={'matchSingle'} contacted={contacted} />
-                            <UserHome userId={thisMatch.id} isReadOnly={true} />
+                            <SingleBud bud={thisMatch} allBuds={false}/>
                         </div>
                     ) : (
                         <p>Loading</p>
@@ -52,23 +44,20 @@ class MatchSingle extends Component {
 
 const mapState = state => ({
     currentUser: state.currentUser,
-    thisMatch: state.thisMatch
+    matches: state.matches
 });
 
 const mapDispatch = (dispatch, ownProps) => ({
-    onLoad(currentUser, matchId) {
-        dispatch(getSingleMatch(currentUser.id, matchId));
+    onLoad(currentUserId) {
+        dispatch(fetchMatches(currentUserId));
     },
     onClick(currentUser, match) {
-        sendEmail(currentUser, match);
+        // TODO: show phone number as alert/pop up
     },
     onUnmatch(match, currentUserId) {
         if (window.confirm(`Are you sure you want to delete your match with ${match.name}?`))
             dispatch(unMatch(match.id, currentUserId));
         ownProps.history.push('/matches');
-    },
-    onDismount(matchId) {
-        dispatch(clearMatchView(matchId));
     }
 });
 
