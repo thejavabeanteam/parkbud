@@ -6,14 +6,14 @@
   "private": true,
   "scripts": {
     "seed": "node seed.js",
-    "start": "NODE_ENV=production node server",
+    "start": "NODE_ENV=production node server && npm run build",
     "build": "npm run build-css && cd client && npm build",
     "build-css": "node-sass-chokidar client/src/styles -o client/src/",
     "watch-css": "concurrently \" npm run build-css \" \" node-sass-chokidar client/src/styles -o client/src/ --watch --recursive\"",
     "sync": "concurrently \"npm install\" \"cd client && npm install\"",
     "server-dev": "nodemon server",
     "client-dev": "NODE_ENV='development' cd client && npm start",
-    "dev": "npm run seed && concurrently \"npm run server-dev\" \"npm run client-dev\" ",
+    "dev": "npm run seed && concurrently \"npm run server-dev\" \"npm run client-dev\" "
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -37,6 +37,10 @@
   },
   "devDependencies": {},
   "engines": {
-  "node": "10.16"
-}
+    "node": "10.x"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "client/node_modules"
+  ]
 }
