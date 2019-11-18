@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "seed": "node seed.js",
-    "start": "NODE_ENV=production node server",
+    "start": "NODE_ENV=production npm run seed && node server",
     "build": "npm run build-css && cd client && npm build",
     "build-css": "node-sass-chokidar client/src/styles -o client/src/",
     "watch-css": "concurrently \" npm run build-css \" \" node-sass-chokidar client/src/styles -o client/src/ --watch --recursive\"",
