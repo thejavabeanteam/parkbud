@@ -5,25 +5,27 @@ const {User, Day, Vehicle, ParkingSpot} = require("./server/db/models");
 
 const users = [
     {
-        "userId": 1,
+        "id": 1,
         "name": "Billy Bronco",
         "email": "bbronco@cpp.edu",
         "password": "billy",
         "gender": "male",
         "accountType": "student",
         "salt": "",
-        "parkingPreferences": ["Lot M"],
+        "parkingPreferences": ["M"],
+        "message": "I'm tired of riding my bike from Overflow!",
         "phoneNumber": "1234567890"
     },
     {
-        "userId": 2,
+        "id": 2,
         "name": "William Kellogg",
         "email": "wkellogg@cpp.edu",
         "password": "william",
         "gender": "male",
         "accountType": "student",
         "salt": "",
-        "parkingPreferences": ["Lot M"],
+        "parkingPreferences": ["M"],
+        "message": "It takes me a while to walk to Lot M, so it'd be nice if I could get a lift to my car!",
         "phoneNumber": "9087654321"
     }];
 
@@ -31,44 +33,35 @@ const days = [
     {
         "userId": 1,
         "dayOfWeek": "Monday",
-        "arrival": "0900",
-        "earliest": "0830",
-        "departure": "1400"
+        "departure": "1700"
     },
     {
         "userId": 1,
         "dayOfWeek": "Tuesday",
-        "arrival": "1200",
-        "earliest": "1100",
         "departure": "1700"
     },
     {
         "userId": 2,
         "dayOfWeek": "Monday",
-        "arrival": "1400",
-        "earliest": "1315",
-        "departure": "1700"
-
+        "departure": "1400"
     },
     {
         "userId": 2,
         "dayOfWeek": "Tuesday",
-        "arrival": "17:00",
-        "earliest": "1645",
-        "departure": "20:00"
+        "departure": "2000"
     }
 ];
 
 const vehicles = [
     {
-        "ownerId": 1,
+        "userId": 1,
         "color": "black",
         "model": "ford",
         "make": "bronco",
         "year": 2012
     },
     {
-        "ownerId": 2,
+        "userId": 2,
         "color": "red",
         "model": "mazda",
         "make": "idk",
@@ -78,10 +71,10 @@ const vehicles = [
 
 const parkingSpots = [
     {
-        "ownerId": 1,
-        "parkingLot": "Lot M",
+        "userId": 2,
+        "parkingLot": "M",
         "school": "Cal Poly Pomona",
-        "pindrop": "/api/user/vehicle/spot/?pindrop=354C%253%20Walnut,%20California"
+        "pindrop": "/api/user/vehicle/spot/?pindrop=354C%253%20Walnut%2C%20California"
     }];
 
 const seed = async () => {

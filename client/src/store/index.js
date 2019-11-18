@@ -13,7 +13,6 @@ import {
     composeWithDevTools
 } from 'redux-devtools-extension';
 import currentUser from './currentUser';
-import profile from './profile';
 import matches from './matches';
 import buds from './buds';
 import form from './form';
@@ -22,10 +21,9 @@ import form from './form';
 // reduce all of the stores
 const reducer = combineReducers({
     currentUser,
-    profile,
     matches,
     buds,
-    form
+    form,
 });
 
 const middleware = composeWithDevTools(applyMiddleware(
@@ -51,7 +49,6 @@ store.subscribe(() => localStorage.setItem('store', JSON.stringify(store.getStat
 
 // export the rest of the reduced redux stores
 export * from './currentUser';
-export * from './profile';
 export * from './matches';
 export * from './buds';
 export * from './form';

@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const Vehicle = db.define('vehicle', {
-    ownerId: {
+    userId: {
         type: Sequelize.INTEGER,
         unique: true
     },

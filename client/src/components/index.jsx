@@ -9,5 +9,4 @@ export { default as AllBuds } from './AllBuds';
 export { default as Matches } from './Matches';
 export { default as MatchSingle} from './MatchSingle';
 export { CreateProfile, UpdateProfile } from './forms/ProfileForm';
- export { default as ParkingLots } from './ParkingLots';
-export { default as EmailPreview } from './EmailPreview';
+export { default as Home } from './Home';

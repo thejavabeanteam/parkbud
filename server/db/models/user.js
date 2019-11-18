@@ -25,6 +25,9 @@ const User = db.define('user', {
         type: Sequelize.ARRAY(Sequelize.STRING),
         defaultValue: []
     },
+    message: {
+        type: Sequelize.TEXT
+    },
     phoneNumber: {
         type: Sequelize.STRING,
         defaultValue: ''

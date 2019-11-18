@@ -51,7 +51,7 @@ export class Menu extends React.Component {
                         </label>
 
                         <Link
-                            to={ '/user/' + currentUser.id }
+                            to={ '/user/' }
                             onClick={this.handleOutsideClick}
                             className="menu-item item-1"
                         >
@@ -79,7 +79,7 @@ export class Menu extends React.Component {
                             </Tooltip>
                         </Link>
                         <Link
-                            to={ '/buds/' + currentUser.id }
+                            to={ '/home' }
                             onClick={this.handleOutsideClick}
                             className="menu-item item-3"
                         >
@@ -122,7 +122,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
     handleClick() {
-        dispatch(logout()); //once the logout function has been created
+        dispatch(logout());
     },
 });
 

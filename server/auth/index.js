@@ -5,7 +5,6 @@ module.exports = router;
 
 // add routing for /login
 router.post('/login', (req, res, next) => {
-
     User.findOne({where: {email: req.body.email}})
         .then(user => {
             if (!user) {
@@ -37,8 +36,9 @@ router.post('/signup', (req, res, next) => {
 
 // add routing for /logout
 router.post('/logout', (req, res) => {
-    req.logout();
-    res.redirect('/')
+    req.session.destroy(function (err) {
+        res.redirect('/'); //Inside a callback… bulletproof!
+    });
 });
 
 

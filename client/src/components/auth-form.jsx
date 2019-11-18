@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import FontAwesome from 'react-fontawesome';
 import PropTypes from 'prop-types';
-import { auth, fetchMatches } from '../store';
+import { auth } from '../store';
 import logo from '../styles/logo.png';
 
 /**
@@ -82,7 +82,6 @@ const AuthForm = (props) => {
                                     Sign Up
                                 </button>
                             </div>
-                            {/* error && error.response && <div> {error.response.data} </div> */}
                         </form>
                     </div>
                 </div>
@@ -113,10 +112,9 @@ const mapDispatch = (dispatch, ownProps) => ({
         evt.preventDefault();
         const email = evt.target.email.value;
         const password = evt.target.password.value;
-        const redirect = type === 'login' ? '/buds' : '/createProfile';
+        const redirect = type === 'login' ? '/home' : '/createProfile';
         Promise.resolve(dispatch(auth(email, password, type))).then((res) => {
             ownProps.history.push(redirect);
-            dispatch(fetchMatches(res))
         });
     },
 });
