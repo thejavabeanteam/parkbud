@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-// import logout store
-// import the Menu component
+import { logout } from './store';
+import Menu from './components/Menu';
 
 /**
  * COMPONENT
@@ -16,7 +16,7 @@ class App extends Component {
     const { children } = this.props;
     return (
         <div className="App">
-          {/*Place the Menu here*/}
+          <Menu />
           {children}
         </div>
     );
@@ -28,7 +28,7 @@ const mapState = state => ({
 });
 const mapDispatch = dispatch => ({
   handleClick() {
-    // add the logout function to the App
+    dispatch(logout());
   },
 });
 export default withRouter(connect(mapState, mapDispatch)(App));

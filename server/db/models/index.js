@@ -6,6 +6,8 @@ const Seen = require('./seen');
 const ParkingSpot = require('./parkingSpot');
 
 User.hasMany(Day, {constraints: false});
+User.hasOne(Vehicle, {constraints: false});
+User.hasOne(ParkingSpot, {constraints: false});
 
 module.exports = {
     User,

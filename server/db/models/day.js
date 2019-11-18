@@ -7,19 +7,12 @@ const Day = db.define('day', {
         primaryKey: true
     },
     dayOfWeek: {
-        type: Sequelize.ENUM("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"),
+        type: Sequelize.ENUM("Monday", "Tuesday", "Wednesday", "Thursday", "Friday"),
         primaryKey: true
-    },
-    arrival:{
-        type: Sequelize.TIME
     },
     departure: {
         type: Sequelize.TIME,
         isAfter: this.arrival
-    },
-    earliest: {
-        type: Sequelize.TIME,
-        isBefore: this.arrival
     }
 });
 
